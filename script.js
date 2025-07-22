@@ -284,7 +284,7 @@ $(document).ready(function() {
         if (!selectedRoute) return;
         
         const routeData = baselineData[selectedRoute];
-        const tbody = $('#detailedTable tbody');
+        const tbody = $('#detailedTableBody');
         tbody.empty();
         
         routeData.legs.forEach((leg, index) => {

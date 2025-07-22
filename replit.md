@@ -102,7 +102,7 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Updates
 
-### July 22, 2025 - Enhanced Visual Attractiveness
+### July 22, 2025 - Enhanced Visual Attractiveness & Dynamic Route Tables
 - **Modern UI Design**: Implemented gradient backgrounds, glassmorphism effects, and smooth animations
 - **Interactive Route Selection**: Enhanced route cards with hover effects, gradient selections, and animated backgrounds
 - **Enhanced Input Fields**: Added focus scaling effects, color-coded labels with icons, and improved spacing
@@ -113,3 +113,13 @@ Preferred communication style: Simple, everyday language.
 - **Enhanced Header**: Sticky header with glass morphism, gradient branding, and improved navigation
 - **Smart Color Coding**: Dynamic color changes based on emission reduction performance (green/yellow/red)
 - **Micro-interactions**: Subtle animations on hover, focus, and click for better user experience
+
+### July 22, 2025 - Visual Results Dashboard & Dynamic Route Data
+- **Visual Results Dashboard**: Moved results to top with attractive metric cards and animated horizontal bar charts
+- **Comparison Visualization**: Added gradient bars comparing Adjusted Baseline vs Actual Performance with color-coded performance indicators
+- **Performance Messages**: Dynamic status messages based on emission reduction levels (Excellent, Great, Moderate, etc.)
+- **Dynamic Route Dictionaries**: Enhanced route data structure with detailed voyage leg information including type, description, and comprehensive baseline data
+- **Auto-Populating Tables**: Detailed table now dynamically populates based on selected route with different ECA/Non-ECA distances and port operations for each route
+- **Custom Calculation Framework**: Added structured framework for implementing custom CO2 calculations with clear placeholder areas for modifications
+- **Leg-Specific Calculations**: Intelligent fuel distribution based on voyage leg type (ballast-eca, laden-non-eca, port operations, etc.)
+- **Actual Loading/Discharging Integration**: System now uses actual loading and discharging days in calculations for improved accuracy

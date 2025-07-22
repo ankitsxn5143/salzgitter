@@ -1,7 +1,7 @@
 // Maritime CO2 Calculator - Main JavaScript File
 $(document).ready(function() {
     
-    // Baseline data for different routes
+    // Enhanced route data with comprehensive voyage leg information
     const baselineData = {
         narvik: {
             name: "Narvik Route",
@@ -12,13 +12,111 @@ $(document).ready(function() {
                 "Loading/Discharging": { speed: 0, cons: 4.0 }
             },
             legs: [
-                { name: "Pre-Ballast ECA", distance: 629, speed: 15, baseDays: 3024, adjMarginDays: 2.3184, lfoBase: 0, mgoBase: 99.69, hfoBase: 50, co2Exposure: 386.41, co2WTW: 389.04, totalCO2: 386.41 },
-                { name: "Pre-Ballast Non-ECA", distance: 385, speed: 15, baseDays: 1851, adjMarginDays: 1.4191, lfoBase: 61.02, mgoBase: 0, hfoBase: 50, co2Exposure: 226.54, co2WTW: 226.54, totalCO2: 227.10 },
-                { name: "Loading", distance: 0, speed: 0, baseDays: 2.5000, adjMarginDays: 3.6896, lfoBase: 0, mgoBase: 14.36, hfoBase: 0, co2Exposure: 55.65, co2WTW: 56.03, totalCO2: 55.65 },
-                { name: "Laden ECA", distance: 586, speed: 15, baseDays: 3052, adjMarginDays: 2.4342, lfoBase: 0, mgoBase: 104.67, hfoBase: 50, co2Exposure: 405.70, co2WTW: 408.48, totalCO2: 405.70 },
-                { name: "Laden Non-ECA", distance: 497, speed: 15, baseDays: 1.9845, adjMarginDays: 2.0645, lfoBase: 88.77, mgoBase: 0, hfoBase: 50, co2Exposure: 332.64, co2WTW: 332.64, totalCO2: 530.39 },
-                { name: "Discharging", distance: 0, speed: 0, baseDays: 3.3000, adjMarginDays: 4.1981, lfoBase: 0, mgoBase: 16.54, hfoBase: 100, co2Exposure: 64.13, co2WTW: 64.56, totalCO2: 64.13 },
-                { name: "Post-Ballast ECA", distance: 64, speed: 15, baseDays: 0.0404, adjMarginDays: 0.3096, lfoBase: 0, mgoBase: 13.31, hfoBase: 100, co2Exposure: 51.60, co2WTW: 51.95, totalCO2: 51.69 }
+                { 
+                    name: "Pre-Ballast ECA", 
+                    distance: 629, 
+                    speed: 15, 
+                    baseDays: 3024, 
+                    adjMarginDays: 2.3184, 
+                    lfoBase: 0, 
+                    mgoBase: 99.69, 
+                    hfoBase: 50, 
+                    co2Exposure: 386.41, 
+                    co2WTW: 389.04, 
+                    totalCO2: 386.41,
+                    type: 'ballast-eca',
+                    description: 'Ballast voyage in ECA zone before loading'
+                },
+                { 
+                    name: "Pre-Ballast Non-ECA", 
+                    distance: 385, 
+                    speed: 15, 
+                    baseDays: 1851, 
+                    adjMarginDays: 1.4191, 
+                    lfoBase: 61.02, 
+                    mgoBase: 0, 
+                    hfoBase: 50, 
+                    co2Exposure: 226.54, 
+                    co2WTW: 226.54, 
+                    totalCO2: 227.10,
+                    type: 'ballast-non-eca',
+                    description: 'Ballast voyage outside ECA zones'
+                },
+                { 
+                    name: "Loading", 
+                    distance: 0, 
+                    speed: 0, 
+                    baseDays: 2.5000, 
+                    adjMarginDays: 3.6896, 
+                    lfoBase: 0, 
+                    mgoBase: 14.36, 
+                    hfoBase: 0, 
+                    co2Exposure: 55.65, 
+                    co2WTW: 56.03, 
+                    totalCO2: 55.65,
+                    type: 'port-loading',
+                    description: 'Loading operations at port'
+                },
+                { 
+                    name: "Laden ECA", 
+                    distance: 586, 
+                    speed: 15, 
+                    baseDays: 3052, 
+                    adjMarginDays: 2.4342, 
+                    lfoBase: 0, 
+                    mgoBase: 104.67, 
+                    hfoBase: 50, 
+                    co2Exposure: 405.70, 
+                    co2WTW: 408.48, 
+                    totalCO2: 405.70,
+                    type: 'laden-eca',
+                    description: 'Laden voyage in ECA zone'
+                },
+                { 
+                    name: "Laden Non-ECA", 
+                    distance: 497, 
+                    speed: 15, 
+                    baseDays: 1.9845, 
+                    adjMarginDays: 2.0645, 
+                    lfoBase: 88.77, 
+                    mgoBase: 0, 
+                    hfoBase: 50, 
+                    co2Exposure: 332.64, 
+                    co2WTW: 332.64, 
+                    totalCO2: 530.39,
+                    type: 'laden-non-eca',
+                    description: 'Laden voyage outside ECA zones'
+                },
+                { 
+                    name: "Discharging", 
+                    distance: 0, 
+                    speed: 0, 
+                    baseDays: 3.3000, 
+                    adjMarginDays: 4.1981, 
+                    lfoBase: 0, 
+                    mgoBase: 16.54, 
+                    hfoBase: 100, 
+                    co2Exposure: 64.13, 
+                    co2WTW: 64.56, 
+                    totalCO2: 64.13,
+                    type: 'port-discharging',
+                    description: 'Discharging operations at port'
+                },
+                { 
+                    name: "Post-Ballast ECA", 
+                    distance: 64, 
+                    speed: 15, 
+                    baseDays: 0.0404, 
+                    adjMarginDays: 0.3096, 
+                    lfoBase: 0, 
+                    mgoBase: 13.31, 
+                    hfoBase: 100, 
+                    co2Exposure: 51.60, 
+                    co2WTW: 51.95, 
+                    totalCO2: 51.69,
+                    type: 'ballast-eca',
+                    description: 'Ballast voyage in ECA zone after discharge'
+                }
             ]
         },
         "seven-island": {
@@ -30,13 +128,111 @@ $(document).ready(function() {
                 "Loading/Discharging": { speed: 0, cons: 3.5 }
             },
             legs: [
-                { name: "Pre-Ballast ECA", distance: 520, speed: 14, baseDays: 2.7143, adjMarginDays: 2.1000, lfoBase: 0, mgoBase: 85.50, hfoBase: 45, co2Exposure: 330.20, co2WTW: 332.15, totalCO2: 330.20 },
-                { name: "Pre-Ballast Non-ECA", distance: 410, speed: 14, baseDays: 2.1429, adjMarginDays: 1.6500, lfoBase: 58.50, mgoBase: 0, hfoBase: 45, co2Exposure: 210.40, co2WTW: 210.40, totalCO2: 211.20 },
-                { name: "Loading", distance: 0, speed: 0, baseDays: 2.2000, adjMarginDays: 3.2000, lfoBase: 0, mgoBase: 12.80, hfoBase: 0, co2Exposure: 48.60, co2WTW: 49.00, totalCO2: 48.60 },
-                { name: "Laden ECA", distance: 640, speed: 13, baseDays: 3.5897, adjMarginDays: 2.7500, lfoBase: 0, mgoBase: 95.20, hfoBase: 45, co2Exposure: 380.15, co2WTW: 382.90, totalCO2: 380.15 },
-                { name: "Laden Non-ECA", distance: 420, speed: 13, baseDays: 2.3077, adjMarginDays: 1.8500, lfoBase: 78.20, mgoBase: 0, hfoBase: 45, co2Exposure: 295.80, co2WTW: 295.80, totalCO2: 472.50 },
-                { name: "Discharging", distance: 0, speed: 0, baseDays: 2.9000, adjMarginDays: 3.8000, lfoBase: 0, mgoBase: 14.20, hfoBase: 85, co2Exposure: 56.40, co2WTW: 56.80, totalCO2: 56.40 },
-                { name: "Post-Ballast ECA", distance: 85, speed: 14, baseDays: 0.4429, adjMarginDays: 0.3500, lfoBase: 0, mgoBase: 11.80, hfoBase: 85, co2Exposure: 45.20, co2WTW: 45.50, totalCO2: 45.20 }
+                { 
+                    name: "Pre-Ballast ECA", 
+                    distance: 520, 
+                    speed: 14, 
+                    baseDays: 2.7143, 
+                    adjMarginDays: 2.1000, 
+                    lfoBase: 0, 
+                    mgoBase: 85.50, 
+                    hfoBase: 45, 
+                    co2Exposure: 330.20, 
+                    co2WTW: 332.15, 
+                    totalCO2: 330.20,
+                    type: 'ballast-eca',
+                    description: 'Ballast voyage in ECA zone before loading'
+                },
+                { 
+                    name: "Pre-Ballast Non-ECA", 
+                    distance: 410, 
+                    speed: 14, 
+                    baseDays: 2.1429, 
+                    adjMarginDays: 1.6500, 
+                    lfoBase: 58.50, 
+                    mgoBase: 0, 
+                    hfoBase: 45, 
+                    co2Exposure: 210.40, 
+                    co2WTW: 210.40, 
+                    totalCO2: 211.20,
+                    type: 'ballast-non-eca',
+                    description: 'Ballast voyage outside ECA zones'
+                },
+                { 
+                    name: "Loading", 
+                    distance: 0, 
+                    speed: 0, 
+                    baseDays: 2.2000, 
+                    adjMarginDays: 3.2000, 
+                    lfoBase: 0, 
+                    mgoBase: 12.80, 
+                    hfoBase: 0, 
+                    co2Exposure: 48.60, 
+                    co2WTW: 49.00, 
+                    totalCO2: 48.60,
+                    type: 'port-loading',
+                    description: 'Loading operations at port'
+                },
+                { 
+                    name: "Laden ECA", 
+                    distance: 640, 
+                    speed: 13, 
+                    baseDays: 3.5897, 
+                    adjMarginDays: 2.7500, 
+                    lfoBase: 0, 
+                    mgoBase: 95.20, 
+                    hfoBase: 45, 
+                    co2Exposure: 380.15, 
+                    co2WTW: 382.90, 
+                    totalCO2: 380.15,
+                    type: 'laden-eca',
+                    description: 'Laden voyage in ECA zone'
+                },
+                { 
+                    name: "Laden Non-ECA", 
+                    distance: 420, 
+                    speed: 13, 
+                    baseDays: 2.3077, 
+                    adjMarginDays: 1.8500, 
+                    lfoBase: 78.20, 
+                    mgoBase: 0, 
+                    hfoBase: 45, 
+                    co2Exposure: 295.80, 
+                    co2WTW: 295.80, 
+                    totalCO2: 472.50,
+                    type: 'laden-non-eca',
+                    description: 'Laden voyage outside ECA zones'
+                },
+                { 
+                    name: "Discharging", 
+                    distance: 0, 
+                    speed: 0, 
+                    baseDays: 2.9000, 
+                    adjMarginDays: 3.8000, 
+                    lfoBase: 0, 
+                    mgoBase: 14.20, 
+                    hfoBase: 85, 
+                    co2Exposure: 56.40, 
+                    co2WTW: 56.80, 
+                    totalCO2: 56.40,
+                    type: 'port-discharging',
+                    description: 'Discharging operations at port'
+                },
+                { 
+                    name: "Post-Ballast ECA", 
+                    distance: 85, 
+                    speed: 14, 
+                    baseDays: 0.4429, 
+                    adjMarginDays: 0.3500, 
+                    lfoBase: 0, 
+                    mgoBase: 11.80, 
+                    hfoBase: 85, 
+                    co2Exposure: 45.20, 
+                    co2WTW: 45.50, 
+                    totalCO2: 45.20,
+                    type: 'ballast-eca',
+                    description: 'Ballast voyage in ECA zone after discharge'
+                }
             ]
         }
     };
@@ -73,11 +269,45 @@ $(document).ready(function() {
         $('.route-option').removeClass('border-maritime-500 bg-maritime-50');
         $(this).closest('.route-option').addClass('border-maritime-500 bg-maritime-50');
         
+        // Update detailed table with new route data
+        updateDetailedTable();
+        
         // Recalculate if form is already filled
         if (validateInputs()) {
             calculateEmissions();
         }
     });
+
+    // Function to dynamically populate detailed table based on route selection
+    function updateDetailedTable() {
+        const selectedRoute = $('input[name="route"]:checked').val();
+        if (!selectedRoute) return;
+        
+        const routeData = baselineData[selectedRoute];
+        const tbody = $('#detailedTable tbody');
+        tbody.empty();
+        
+        routeData.legs.forEach((leg, index) => {
+            const row = $(`
+                <tr class="border-b hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+                    <td class="border border-gray-300 dark:border-gray-600 p-3 font-medium">${leg.name}</td>
+                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-center">${leg.distance}</td>
+                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-center">${leg.speed}</td>
+                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-center">${leg.baseDays}</td>
+                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-center">${leg.adjMarginDays}</td>
+                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-center">${leg.lfoBase}</td>
+                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-center">${leg.mgoBase}</td>
+                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-center">${leg.hfoBase}</td>
+                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-center font-semibold text-blue-600 dark:text-blue-400">${leg.co2Exposure.toFixed(2)}</td>
+                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-center font-semibold text-green-600 dark:text-green-400" id="actualCO2_${index}">--</td>
+                </tr>
+            `);
+            tbody.append(row);
+        });
+    }
+
+    // Initialize table on page load  
+    updateDetailedTable();
 
     // Input validation
     function validateInputs() {
@@ -239,54 +469,79 @@ $(document).ready(function() {
         });
     }
 
-    // Generate detailed voyage legs table
-    function generateDetailedTable(routeData, inputs, totalCO2) {
-        const tbody = $('#detailedTableBody');
-        tbody.empty();
-
-        let cumulativeCO2 = 0;
-
+    // Calculate and populate actual CO2 WTW values in detailed table
+    function calculateActualCO2Values(routeData, inputs) {
         routeData.legs.forEach((leg, index) => {
-            // Calculate adjusted values based on sea margins
+            // Calculate adjusted values based on sea margins and actual inputs
             let adjMarginDays = leg.adjMarginDays;
-            if (leg.name.includes('Ballast')) {
+            
+            // Apply sea margin adjustments based on leg type
+            if (leg.type && leg.type.includes('ballast')) {
                 adjMarginDays *= (inputs.seaMarginBallast / 2.5); // Adjust based on input vs baseline
-            } else if (leg.name.includes('Laden')) {
+            } else if (leg.type && leg.type.includes('laden')) {
                 adjMarginDays *= (inputs.seaMarginLaden / 3.2); // Adjust based on input vs baseline
+            }
+            
+            // Apply actual loading/discharging days
+            if (leg.type === 'port-loading' && inputs.actualLoadingDays) {
+                adjMarginDays = inputs.actualLoadingDays;
+            } else if (leg.type === 'port-discharging' && inputs.actualDischargingDays) {
+                adjMarginDays = inputs.actualDischargingDays;
             }
 
             // Calculate fuel consumption based on actual inputs proportionally
             const totalInputFuel = inputs.lfoConsumption + inputs.hfoConsumption + inputs.mgoConsumption;
-            const legFuelRatio = (leg.lfoBase + leg.mgoBase + leg.hfoBase) / 100; // Normalize
+            const baseFuel = leg.lfoBase + leg.mgoBase + leg.hfoBase;
+            const legFuelRatio = baseFuel > 0 ? baseFuel / 100 : 0.01; // Normalize with minimum
             
-            const legLFO = legFuelRatio * inputs.lfoConsumption * 0.3;
-            const legMGO = legFuelRatio * inputs.mgoConsumption * 0.4;
-            const legHFO = legFuelRatio * inputs.hfoConsumption * 0.3;
+            // Distribute actual consumption proportionally based on leg type and baseline
+            let legLFO = 0, legMGO = 0, legHFO = 0;
+            
+            if (leg.type && leg.type.includes('eca')) {
+                // ECA zones prefer LFO/MGO
+                legMGO = legFuelRatio * inputs.mgoConsumption * 0.6;
+                legLFO = legFuelRatio * inputs.lfoConsumption * 0.3;
+                legHFO = legFuelRatio * inputs.hfoConsumption * 0.1;
+            } else if (leg.type && leg.type.includes('non-eca')) {
+                // Non-ECA zones can use HFO
+                legHFO = legFuelRatio * inputs.hfoConsumption * 0.7;
+                legLFO = legFuelRatio * inputs.lfoConsumption * 0.2;
+                legMGO = legFuelRatio * inputs.mgoConsumption * 0.1;
+            } else {
+                // Port operations - typically MGO
+                legMGO = legFuelRatio * inputs.mgoConsumption * 0.8;
+                legLFO = legFuelRatio * inputs.lfoConsumption * 0.2;
+            }
 
             // Calculate CO2 for this leg
             const legCO2 = (legLFO * emissionFactors.lfo + legMGO * emissionFactors.mgo + legHFO * emissionFactors.hfo) / 1000;
-            cumulativeCO2 += legCO2;
+            
+            // Calculate actual CO2 WTW for this leg (adding Well-to-Wake factor)
+            const actualCO2WTW = legCO2 * 1.05;
 
-            // Calculate actual CO2 WTW for this leg
-            const actualCO2WTW = legCO2 * 1.05; // Adding 5% for WTW factor
-
-            const row = $(`
-                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                    <td class="border border-gray-300 dark:border-gray-600 p-2 font-medium">${leg.name}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">${leg.distance}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">${leg.speed}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">${leg.baseDays.toFixed(4)}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">${adjMarginDays.toFixed(4)}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">${leg.co2Exposure.toFixed(2)}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">${actualCO2WTW.toFixed(2)}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-2 text-center font-medium">${legCO2.toFixed(2)}</td>
-                </tr>
-            `);
-            tbody.append(row);
+            // Update the table cell with calculated value
+            $(`#actualCO2_${index}`).text(actualCO2WTW.toFixed(2));
+            
+            // Add custom calculation placeholder comment for user modifications
+            // USER CUSTOM CALCULATION AREA - You can modify the actualCO2WTW calculation above
+            // Example: actualCO2WTW = legCO2 * customFactor + additionalEmissions;
         });
+    }
 
+    // Generate detailed voyage legs table (legacy function - kept for compatibility)
+    function generateDetailedTable(routeData, inputs, totalCO2) {
+        // This function is now handled by updateDetailedTable and calculateActualCO2Values
+        calculateActualCO2Values(routeData, inputs);
+        
         // Store cumulative CO2 for results summary
-        window.cumulativeCO2 = cumulativeCO2;
+        let cumulativeCO2 = 0;
+        routeData.legs.forEach((leg, index) => {
+            const cellValue = $(`#actualCO2_${index}`).text();
+            if (cellValue !== '--') {
+                cumulativeCO2 += parseFloat(cellValue) || 0;
+            }
+        });
+        window.cumulativeCO2 = cumulativeCO2 / 1000; // Convert to tonnes
     }
 
     // Update results summary with visual bars and animations

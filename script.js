@@ -33,12 +33,12 @@ $(document).ready(function() {
                     speed: 13, 
                     baseDays: 1.387, 
                     adjMarginDays: 1.595, 
-                    lfoBase: 0, 
+                    lfoBase: 68.59, 
                     mgoBase: 0, 
-                    hfoBase: 68.59, 
-                    co2Exposure: 254.92, 
-                    co2WTW: 254.92, 
-                    totalCO2: 254.92,
+                    hfoBase: 0, 
+                    co2Exposure: 257.00, 
+                    co2WTW: 257.00, 
+                    totalCO2: 257.00,
                     type: 'ballast-non-eca',
                     description: 'Ballast voyage outside ECA zones'
                 },
@@ -78,12 +78,12 @@ $(document).ready(function() {
                     speed: 12, 
                     baseDays: 1.725, 
                     adjMarginDays: 1.984, 
-                    lfoBase: 0, 
+                    lfoBase: 85.31, 
                     mgoBase: 0, 
-                    hfoBase: 85.31, 
-                    co2Exposure: 317.03, 
-                    co2WTW: 317.03, 
-                    totalCO2: 317.03,
+                    hfoBase: 0, 
+                    co2Exposure: 319.65, 
+                    co2WTW: 319.65, 
+                    totalCO2: 319.65,
                     type: 'laden-non-eca',
                     description: 'Laden voyage outside ECA zones'
                 },
@@ -149,12 +149,12 @@ $(document).ready(function() {
                     speed: 13, 
                     baseDays: 5.645, 
                     adjMarginDays: 6.492, 
-                    lfoBase: 0, 
+                    lfoBase: 279.14, 
                     mgoBase: 0, 
-                    hfoBase: 279.14, 
-                    co2Exposure: 1037.95, 
-                    co2WTW: 1037.95, 
-                    totalCO2: 1037.95,
+                    hfoBase: 0, 
+                    co2Exposure: 1046.21, 
+                    co2WTW: 1046.21, 
+                    totalCO2: 1046.21,
                     type: 'ballast-non-eca',
                     description: 'Ballast voyage outside ECA zones'
                 },
@@ -194,12 +194,12 @@ $(document).ready(function() {
                     speed: 12, 
                     baseDays: 5.454, 
                     adjMarginDays: 6.272, 
-                    lfoBase: 0, 
+                    lfoBase: 269.69, 
                     mgoBase: 0, 
-                    hfoBase: 269.69, 
-                    co2Exposure: 1002.50, 
-                    co2WTW: 1002.50, 
-                    totalCO2: 1002.50,
+                    hfoBase: 0, 
+                    co2Exposure: 1010.23, 
+                    co2WTW: 1010.23, 
+                    totalCO2: 1010.23,
                     type: 'laden-non-eca',
                     description: 'Laden voyage outside ECA zones'
                 },
@@ -457,8 +457,8 @@ $(document).ready(function() {
                 // ECA areas use MGO
                 totalMGO += totalConsumption;
             } else if (leg.type && leg.type.includes('non-eca')) {
-                // Non-ECA areas use HFO  
-                totalHFO += totalConsumption;
+                // Non-ECA areas use LFO  
+                totalLFO += totalConsumption;
             } else {
                 // Port operations use MGO
                 totalMGO += totalConsumption;
@@ -520,8 +520,8 @@ $(document).ready(function() {
                 // ECA areas use MGO
                 totalMGO += totalConsumption;
             } else if (leg.type && leg.type.includes('non-eca')) {
-                // Non-ECA areas use HFO  
-                totalHFO += totalConsumption;
+                // Non-ECA areas use LFO  
+                totalLFO += totalConsumption;
             } else {
                 // Port operations use MGO
                 totalMGO += totalConsumption;
@@ -633,8 +633,8 @@ $(document).ready(function() {
                 // ECA areas use MGO
                 legMGO = totalConsumption;
             } else if (leg.type && leg.type.includes('non-eca')) {
-                // Non-ECA areas use HFO  
-                legHFO = totalConsumption;
+                // Non-ECA areas use LFO  
+                legLFO = totalConsumption;
             } else {
                 // Port operations use MGO
                 legMGO = totalConsumption;

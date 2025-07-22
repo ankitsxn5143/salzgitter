@@ -123,3 +123,11 @@ Preferred communication style: Simple, everyday language.
 - **Custom Calculation Framework**: Added structured framework for implementing custom CO2 calculations with clear placeholder areas for modifications
 - **Leg-Specific Calculations**: Intelligent fuel distribution based on voyage leg type (ballast-eca, laden-non-eca, port operations, etc.)
 - **Actual Loading/Discharging Integration**: System now uses actual loading and discharging days in calculations for improved accuracy
+
+### July 22, 2025 - Fixed Route Selection & Baseline Display
+- **Corrected Baseline Values**: Fixed baseline calculations to use proper fuel types (LFO for Non-ECA, MGO for ECA/ports)
+- **Route Selection Fix**: Fixed radio button route selection to properly detect Seven Island vs Narvik routes  
+- **Real-time Card Updates**: Baseline cards now update immediately when switching routes (no need to calculate first)
+- **Direct Fuel Calculation**: Implemented streamlined calculation using direct fuel input with formula: (LFO×3.747 + MGO×3.876 + HFO×3.716)/cargo×1000
+- **Final Baseline Values**: Narvik Route: 11.12 gCO2/1000MT, Seven Island: 30.80 gCO2/1000MT
+- **Debug Logging**: Added comprehensive console logging for troubleshooting route selection and calculation accuracy

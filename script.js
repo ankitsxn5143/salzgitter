@@ -275,12 +275,22 @@ $(document).ready(function() {
         $('.route-option').removeClass('border-maritime-500 bg-maritime-50');
         $(this).closest('.route-option').addClass('border-maritime-500 bg-maritime-50');
         
+        // Get the selected route and update baseline cards immediately
+        const selectedRoute = $(this).val();
+        const baselineCO2 = routeBaselines[selectedRoute] || routeBaselines['narvik'];
+        
+        // Update the baseline cards immediately
+        $('#originalBaselineCard').text(baselineCO2.toFixed(2));
+        $('#adjBaselineCard').text(baselineCO2.toFixed(2));
+        
+        console.log('Route changed to:', selectedRoute, 'Baseline:', baselineCO2.toFixed(2));
+        
         // Update detailed table with new route data
         updateDetailedTable();
         
         // Recalculate if form is already filled
         if (validateInputs()) {
-            calculateEmissions();
+            calculateDirectFuelEmissions();
         }
     });
 
@@ -797,13 +807,8 @@ $(document).ready(function() {
         // Convert to gCO2 per 1000MT cargo: (Total CO2 / cargo quantity) * 1000
         const actualCO2per1000MT = (totalCO2 / cargoQuantity) * 1000;
         
-        // Get selected route baseline from radio buttons - debug this
-        const selectedRouteElement = $('input[name="route"]:checked');
-        const selectedRoute = selectedRouteElement.val() || 'narvik';
-        console.log('Route element found:', selectedRouteElement.length > 0);
-        console.log('Route value:', selectedRoute);
-        console.log('All route inputs:', $('input[name="route"]').map(function() { return this.value + ':' + this.checked; }).get());
-        
+        // Get selected route baseline from radio buttons
+        const selectedRoute = $('input[name="route"]:checked').val() || 'narvik';
         const baselineCO2 = routeBaselines[selectedRoute] || routeBaselines['narvik'];
         
         // Calculate emission reduction percentage
@@ -900,6 +905,12 @@ $(document).ready(function() {
     // Calculate button click handler - use direct calculation
     $('#calculateBtn').on('click', calculateDirectFuelEmissions);
 
+    // Initialize baseline cards with default route values
+    const defaultRoute = $('input[name="route"]:checked').val() || 'narvik';
+    const defaultBaseline = routeBaselines[defaultRoute] || routeBaselines['narvik'];
+    $('#originalBaselineCard').text(defaultBaseline.toFixed(2));
+    $('#adjBaselineCard').text(defaultBaseline.toFixed(2));
+    
     // Initialize with sample calculation if default values are present
     if (validateInputs()) {
         setTimeout(calculateDirectFuelEmissions, 1000);

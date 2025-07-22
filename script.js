@@ -797,9 +797,9 @@ $(document).ready(function() {
         // Convert to gCO2 per 1000MT cargo: (Total CO2 / cargo quantity) * 1000
         const actualCO2per1000MT = (totalCO2 / cargoQuantity) * 1000;
         
-        // Get selected route baseline
-        const selectedRoute = $('#routeSelect').val();
-        const baselineCO2 = routeBaselines[selectedRoute] || 0;
+        // Get selected route baseline from radio buttons
+        const selectedRoute = $('input[name="route"]:checked').val() || 'narvik';
+        const baselineCO2 = routeBaselines[selectedRoute] || routeBaselines['narvik'];
         
         // Calculate emission reduction percentage
         const emissionReduction = ((baselineCO2 - actualCO2per1000MT) / baselineCO2) * 100;

@@ -878,6 +878,8 @@ $(document).ready(function() {
         
         // Console log for verification
         console.log('=== DIRECT FUEL CALCULATION ===');
+        console.log(`Selected Route: ${selectedRoute}`);
+        console.log(`Available Routes:`, Object.keys(routeBaselines));
         console.log(`LFO: ${lfoConsumption} tonnes × ${emissionFactors.lfo} = ${(lfoConsumption * emissionFactors.lfo).toFixed(2)} tonnes CO2`);
         console.log(`MGO: ${mgoConsumption} tonnes × ${emissionFactors.mgo} = ${(mgoConsumption * emissionFactors.mgo).toFixed(2)} tonnes CO2`);
         console.log(`HFO: ${hfoConsumption} tonnes × ${emissionFactors.hfo} = ${(hfoConsumption * emissionFactors.hfo).toFixed(2)} tonnes CO2`);

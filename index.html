@@ -192,37 +192,83 @@
                 </div>
             </div>
 
-            <!-- Summary View -->
+            <!-- Results Summary -->
             <div id="summaryView" class="card-enhanced rounded-xl shadow-lg p-8 mb-8 hidden">
                 <h2 class="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-maritime-600 to-maritime-500 bg-clip-text text-transparent">
                     <i class="fas fa-chart-bar mr-3 text-maritime-600"></i>
-                    CO2 Emissions Analysis
+                    CO2 Emissions Results
                 </h2>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="summary-card p-6 rounded-2xl text-center">
-                        <div class="mb-4">
-                            <i class="fas fa-industry text-4xl text-blue-500 mb-2"></i>
-                        </div>
-                        <div class="text-sm font-semibold text-gray-600 dark:text-gray-300 mb-2 uppercase tracking-wider">Baseline CO2/1000MT</div>
-                        <div class="text-3xl font-bold text-blue-600 dark:text-blue-400 animated-number" id="baselineCO2">--</div>
-                        <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">Industry Standard</div>
+                <!-- Key Metrics Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="metric-card p-4 rounded-xl text-center">
+                        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wider">Original Baseline</div>
+                        <div class="text-xl font-bold text-gray-700 dark:text-gray-300 animated-number" id="originalBaselineCard">--</div>
+                        <div class="text-xs text-gray-400 mt-1">g CO2/1000MT</div>
                     </div>
-                    <div class="summary-card p-6 rounded-2xl text-center">
-                        <div class="mb-4">
-                            <i class="fas fa-leaf text-4xl text-green-500 mb-2"></i>
-                        </div>
-                        <div class="text-sm font-semibold text-gray-600 dark:text-gray-300 mb-2 uppercase tracking-wider">Actual CO2/1000MT</div>
-                        <div class="text-3xl font-bold text-green-600 dark:text-green-400 animated-number" id="actualCO2">--</div>
-                        <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">Your Performance</div>
+                    <div class="metric-card p-4 rounded-xl text-center">
+                        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wider">Adjusted Baseline</div>
+                        <div class="text-xl font-bold text-blue-600 dark:text-blue-400 animated-number" id="adjBaselineCard">--</div>
+                        <div class="text-xs text-gray-400 mt-1">g CO2/1000MT</div>
                     </div>
-                    <div class="summary-card p-6 rounded-2xl text-center">
-                        <div class="mb-4">
-                            <i class="fas fa-percentage text-4xl text-purple-500 mb-2"></i>
+                    <div class="metric-card p-4 rounded-xl text-center">
+                        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wider">Actual Performance</div>
+                        <div class="text-xl font-bold text-green-600 dark:text-green-400 animated-number" id="actualCO2Card">--</div>
+                        <div class="text-xs text-gray-400 mt-1">g CO2/1000MT</div>
+                    </div>
+                    <div class="metric-card p-4 rounded-xl text-center">
+                        <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wider">Emission Reduction</div>
+                        <div class="text-xl font-bold text-purple-600 dark:text-purple-400 animated-number" id="emissionReductionCard">--</div>
+                        <div class="text-xs text-gray-400 mt-1">Percentage</div>
+                    </div>
+                </div>
+
+                <!-- Comparison Bar Chart -->
+                <div class="bar-chart-container p-6 rounded-xl mb-6">
+                    <h3 class="text-lg font-semibold mb-4 text-center">CO2 Emissions Comparison</h3>
+                    
+                    <!-- Adjusted Baseline Bar -->
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium text-blue-600 dark:text-blue-400">Adjusted Baseline</span>
+                            <span class="text-sm font-bold text-blue-600 dark:text-blue-400" id="adjBaselineValue">-- g</span>
                         </div>
-                        <div class="text-sm font-semibold text-gray-600 dark:text-gray-300 mb-2 uppercase tracking-wider">Emission Reduction</div>
-                        <div class="text-3xl font-bold text-purple-600 dark:text-purple-400 animated-number" id="emissionReduction">--</div>
-                        <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">Environmental Impact</div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-3">
+                            <div id="adjBaselineBar" class="bg-gradient-to-r from-blue-500 to-blue-600 h-3 rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Actual Performance Bar -->
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium text-green-600 dark:text-green-400">Actual Performance</span>
+                            <span class="text-sm font-bold text-green-600 dark:text-green-400" id="actualCO2Value">-- g</span>
+                        </div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-3">
+                            <div id="actualCO2Bar" class="bg-gradient-to-r from-green-500 to-green-600 h-3 rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Reduction Indicator -->
+                    <div class="text-center mt-4 p-3 bg-white dark:bg-gray-800 rounded-lg">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Emission Reduction: </span>
+                        <span class="text-lg font-bold" id="reductionPercentage">--%</span>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 mt-1" id="reductionMessage">Calculating...</div>
+                    </div>
+                </div>
+
+                <!-- Additional Metrics Table -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4">
+                    <h4 class="font-semibold mb-3 text-center">Additional Metrics</h4>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div class="text-center p-2 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Contractual EUAs</div>
+                            <div class="font-bold" id="contractualEUAsCard">--</div>
+                        </div>
+                        <div class="text-center p-2 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Total WTW CO2 g</div>
+                            <div class="font-bold" id="totalWTWCO2Card">--</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -287,40 +333,7 @@
                     </div>
                 </div>
 
-                <!-- Results Summary Table -->
-                <div class="mt-8">
-                    <h3 class="text-lg font-semibold mb-4">Results Summary</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full border-collapse border border-gray-300 dark:border-gray-600 text-sm">
-                            <tbody>
-                                <tr class="bg-gray-50 dark:bg-gray-700">
-                                    <td class="border border-gray-300 dark:border-gray-600 p-3 font-semibold">Original Baseline</td>
-                                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-right" id="originalBaseline">--</td>
-                                </tr>
-                                <tr>
-                                    <td class="border border-gray-300 dark:border-gray-600 p-3 font-semibold">Adj. Baseline</td>
-                                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-right" id="adjBaseline">--</td>
-                                </tr>
-                                <tr class="bg-gray-50 dark:bg-gray-700">
-                                    <td class="border border-gray-300 dark:border-gray-600 p-3 font-semibold">Actual CO2 eq/1000 MT Cargo</td>
-                                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-right" id="actualCO2Cargo">--</td>
-                                </tr>
-                                <tr>
-                                    <td class="border border-gray-300 dark:border-gray-600 p-3 font-semibold">Emission Reduction</td>
-                                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-right font-bold text-green-600 dark:text-green-400" id="emissionReductionTable">--</td>
-                                </tr>
-                                <tr class="bg-gray-50 dark:bg-gray-700">
-                                    <td class="border border-gray-300 dark:border-gray-600 p-3 font-semibold">Contractual EUAs</td>
-                                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-right" id="contractualEUAs">--</td>
-                                </tr>
-                                <tr>
-                                    <td class="border border-gray-300 dark:border-gray-600 p-3 font-semibold">Total WTW CO2 g</td>
-                                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-right" id="totalWTWCO2">--</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>

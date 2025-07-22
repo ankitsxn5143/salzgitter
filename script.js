@@ -191,30 +191,10 @@ $(document).ready(function() {
         return (totalFuelCO2 * 1000) / inputs.cargoQuantity;
     }
 
-    // Update summary view with animated counters
+    // Update summary view with animated counters and visual bars
     function updateSummaryView(baselineCO2, actualCO2, emissionReduction) {
-        // Animate the numbers counting up
-        animateNumber('#baselineCO2', 0, baselineCO2, ' g', 1000);
-        animateNumber('#actualCO2', 0, actualCO2, ' g', 1200);
-        animateNumber('#emissionReduction', 0, emissionReduction, '%', 1400);
-        
-        // Add color coding for emission reduction with delay
-        setTimeout(() => {
-            const reductionElement = $('#emissionReduction');
-            reductionElement.removeClass('text-red-600 text-green-600 text-yellow-600');
-            
-            if (emissionReduction > 10) {
-                reductionElement.addClass('text-green-600 dark:text-green-400');
-                // Add success pulse
-                reductionElement.parent().addClass('bg-green-50 dark:bg-green-900/20');
-            } else if (emissionReduction > 0) {
-                reductionElement.addClass('text-yellow-600 dark:text-yellow-400');
-                reductionElement.parent().addClass('bg-yellow-50 dark:bg-yellow-900/20');
-            } else {
-                reductionElement.addClass('text-red-600 dark:text-red-400');
-                reductionElement.parent().addClass('bg-red-50 dark:bg-red-900/20');
-            }
-        }, 1500);
+        // This function is now handled by updateResultsSummary
+        // Keep for backward compatibility if needed
     }
 
     // Animate number counting effect
@@ -309,7 +289,7 @@ $(document).ready(function() {
         window.cumulativeCO2 = cumulativeCO2;
     }
 
-    // Update results summary table
+    // Update results summary with visual bars and animations
     function updateResultsSummary(routeData, inputs, baselineCO2, actualCO2, emissionReduction) {
         // Calculate original baseline (from baseline data without adjustments)
         let originalBaseline = 0;
@@ -330,25 +310,73 @@ $(document).ready(function() {
         // Total WTW CO2 in grams
         const totalWTWCO2 = window.cumulativeCO2 ? (window.cumulativeCO2 * 1000 * 1.05) : 0; // Adding 5% for WTW
 
-        // Update the results summary table
-        $('#originalBaseline').text(originalBaseline.toFixed(2));
-        $('#adjBaseline').text(adjBaseline.toFixed(2));
-        $('#actualCO2Cargo').text(actualCO2Cargo.toFixed(2));
-        $('#emissionReductionTable').text(emissionReduction.toFixed(1) + '%');
-        $('#contractualEUAs').text(contractualEUAs.toFixed(0));
-        $('#totalWTWCO2').text(totalWTWCO2.toFixed(0));
+        // Animate the metric cards
+        setTimeout(() => {
+            animateNumber('#originalBaselineCard', 0, originalBaseline, '', 800);
+            animateNumber('#adjBaselineCard', 0, adjBaseline, '', 1000);
+            animateNumber('#actualCO2Card', 0, actualCO2Cargo, '', 1200);
+            animateNumber('#emissionReductionCard', 0, emissionReduction, '%', 1400);
+        }, 300);
 
-        // Color code the emission reduction
-        const reductionElement = $('#emissionReductionTable');
-        reductionElement.removeClass('text-red-600 text-green-600 text-yellow-600');
+        // Update additional metrics
+        setTimeout(() => {
+            $('#contractualEUAsCard').text(contractualEUAs.toFixed(0));
+            $('#totalWTWCO2Card').text(totalWTWCO2.toFixed(0));
+        }, 800);
+
+        // Update bar chart values
+        $('#adjBaselineValue').text(adjBaseline.toFixed(2) + ' g');
+        $('#actualCO2Value').text(actualCO2Cargo.toFixed(2) + ' g');
+        $('#reductionPercentage').text(emissionReduction.toFixed(1) + '%');
+
+        // Calculate bar widths (use the higher value as 100%)
+        const maxValue = Math.max(adjBaseline, actualCO2Cargo);
+        const adjBaselineWidth = (adjBaseline / maxValue) * 100;
+        const actualCO2Width = (actualCO2Cargo / maxValue) * 100;
+
+        // Animate the bars
+        setTimeout(() => {
+            $('#adjBaselineBar').css('width', adjBaselineWidth + '%');
+            $('#actualCO2Bar').css('width', actualCO2Width + '%');
+        }, 1000);
+
+        // Color code and message the emission reduction
+        const reductionElement = $('#reductionPercentage');
+        const messageElement = $('#reductionMessage');
+        reductionElement.removeClass('text-red-600 text-green-600 text-yellow-600 text-orange-600');
         
-        if (emissionReduction > 10) {
+        let message = '';
+        let barColor = '';
+        
+        if (emissionReduction > 20) {
             reductionElement.addClass('text-green-600 dark:text-green-400');
+            message = 'Excellent Performance! 🌟';
+            barColor = 'from-green-500 to-green-600';
+        } else if (emissionReduction > 10) {
+            reductionElement.addClass('text-green-600 dark:text-green-400');
+            message = 'Great Reduction Achieved';
+            barColor = 'from-green-500 to-green-600';
         } else if (emissionReduction > 0) {
             reductionElement.addClass('text-yellow-600 dark:text-yellow-400');
+            message = 'Moderate Improvement';
+            barColor = 'from-yellow-500 to-yellow-600';
+        } else if (emissionReduction > -10) {
+            reductionElement.addClass('text-orange-600 dark:text-orange-400');
+            message = 'Slight Increase';
+            barColor = 'from-orange-500 to-orange-600';
         } else {
             reductionElement.addClass('text-red-600 dark:text-red-400');
+            message = 'Needs Optimization';
+            barColor = 'from-red-500 to-red-600';
         }
+
+        messageElement.text(message);
+        
+        // Update actual CO2 bar color based on performance
+        setTimeout(() => {
+            $('#actualCO2Bar').removeClass('bg-gradient-to-r from-green-500 to-green-600 from-yellow-500 to-yellow-600 from-orange-500 to-orange-600 from-red-500 to-red-600')
+                              .addClass('bg-gradient-to-r ' + barColor);
+        }, 1200);
     }
 
     // Show/hide detailed view

@@ -384,3 +384,46 @@ label:focus {
     background-size: 800px;
     animation: shimmer 2s infinite ease-out;
 }
+
+/* Progress bar animations */
+.progress-bar {
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced metric cards */
+.metric-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .metric-card {
+    background: linear-gradient(135deg, rgba(55, 65, 81, 0.9) 0%, rgba(55, 65, 81, 0.7) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.metric-card:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Bar chart container */
+.bar-chart-container {
+    background: linear-gradient(135deg, rgba(249, 250, 251, 0.8) 0%, rgba(243, 244, 246, 0.8) 100%);
+    backdrop-filter: blur(5px);
+}
+
+.dark .bar-chart-container {
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.8) 0%, rgba(55, 65, 81, 0.8) 100%);
+}
+
+/* Animated bar glow effect */
+@keyframes barGlow {
+    0%, 100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+    50% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.8); }
+}
+
+.bar-glow {
+    animation: barGlow 2s ease-in-out infinite;
+}

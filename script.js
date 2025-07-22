@@ -237,11 +237,11 @@ $(document).ready(function() {
         }
     };
 
-    // Fuel emission factors (gCO2/g fuel)
+    // Fuel emission factors (tonnes CO2 per tonne fuel)
     const emissionFactors = {
-        lfo: 3.114, // LFO emission factor
-        mgo: 3.206, // MGO emission factor  
-        hfo: 3.114  // HFO emission factor
+        lfo: 3.747, // LFO emission factor
+        mgo: 3.876, // MGO emission factor  
+        hfo: 3.716  // HFO emission factor
     };
 
     // Theme management
@@ -414,20 +414,64 @@ $(document).ready(function() {
         }, 1200);
     }
 
-    // Calculate baseline CO2 per 1000MT
+    // Calculate baseline CO2 per 1000MT using correct maritime methodology
     function calculateBaselineCO2(routeData, inputs) {
-        let totalCO2 = 0;
+        let totalMGO = 0;
+        let totalHFO = 0;
+        let totalLFO = 0;
         
         routeData.legs.forEach(leg => {
-            // Calculate CO2 for each leg based on baseline consumption
-            const legCO2 = (leg.lfoBase * emissionFactors.lfo) + 
-                          (leg.mgoBase * emissionFactors.mgo) + 
-                          (leg.hfoBase * emissionFactors.hfo);
-            totalCO2 += legCO2;
+            let baselineDays = 0;
+            let consumptionPerDay = 0;
+            
+            // Calculate baseline days with static 15% sea margin
+            if (leg.type && leg.type.includes('ballast')) {
+                // Ballast legs: 43 tons/day, 13 knots speed
+                consumptionPerDay = 43;
+                const baseDays = leg.distance / 13 / 24;
+                const seaMarginDays = baseDays * 0.15; // Static 15% sea margin
+                baselineDays = baseDays + seaMarginDays;
+                
+            } else if (leg.type && leg.type.includes('laden')) {
+                // Laden legs: 43 tons/day, 12 knots speed  
+                consumptionPerDay = 43;
+                const baseDays = leg.distance / 12 / 24;
+                const seaMarginDays = baseDays * 0.15; // Static 15% sea margin
+                baselineDays = baseDays + seaMarginDays;
+                
+            } else if (leg.type === 'port-loading') {
+                // Loading: 4.0 tons/day, baseline days as specified
+                consumptionPerDay = 4.0;
+                baselineDays = leg.baseDays; // Use predefined baseline days
+                
+            } else if (leg.type === 'port-discharging') {
+                // Discharging: 4.0 tons/day, baseline days as specified
+                consumptionPerDay = 4.0;
+                baselineDays = leg.baseDays; // Use predefined baseline days
+            }
+            
+            // Calculate fuel consumption based on ECA/Non-ECA
+            const totalConsumption = baselineDays * consumptionPerDay;
+            
+            if (leg.type && leg.type.includes('eca')) {
+                // ECA areas use MGO
+                totalMGO += totalConsumption;
+            } else if (leg.type && leg.type.includes('non-eca')) {
+                // Non-ECA areas use HFO  
+                totalHFO += totalConsumption;
+            } else {
+                // Port operations use MGO
+                totalMGO += totalConsumption;
+            }
         });
-
-        // Convert to gCO2 per 1000MT cargo
-        return (totalCO2 * 1000) / inputs.cargoQuantity;
+        
+        // Calculate total CO2 emissions
+        const totalCO2 = (totalLFO * emissionFactors.lfo) + 
+                        (totalMGO * emissionFactors.mgo) + 
+                        (totalHFO * emissionFactors.hfo);
+        
+        // Convert using your formula: Total CO2 / 133000 * 1000
+        return (totalCO2 / 133000) * 1000;
     }
 
     // Calculate actual CO2 based on maritime logic with sea margins
@@ -489,8 +533,8 @@ $(document).ready(function() {
                         (totalMGO * emissionFactors.mgo) + 
                         (totalHFO * emissionFactors.hfo);
         
-        // Convert to gCO2 per 1000MT cargo
-        return (totalCO2 * 1000 * 1000) / inputs.cargoQuantity;
+        // Convert using your formula: Total CO2 / cargo quantity * 1000
+        return (totalCO2 / inputs.cargoQuantity) * 1000;
     }
 
     // Update summary view with animated counters and visual bars
@@ -601,8 +645,8 @@ $(document).ready(function() {
                           (legMGO * emissionFactors.mgo) + 
                           (legHFO * emissionFactors.hfo);
             
-            // Convert to gCO2 and apply to 1000MT cargo
-            const actualCO2WTW = (legCO2 * 1000) / inputs.cargoQuantity;
+            // Convert using maritime formula per voyage leg
+            const actualCO2WTW = (legCO2 / inputs.cargoQuantity) * 1000;
 
             // Update the table cell with calculated value
             $(`#actualCO2_${index}`).text(actualCO2WTW.toFixed(2));

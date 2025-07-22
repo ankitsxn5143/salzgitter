@@ -294,9 +294,15 @@ $(document).ready(function() {
         // Update detailed table with new route data
         updateDetailedTable();
         
-        // Recalculate if form is already filled
+        // Recalculate if form is already filled - but don't let it override our card values
         if (validateInputs()) {
             calculateDirectFuelEmissions();
+        } else {
+            // If not calculating, at least update the cards one more time after table update
+            setTimeout(() => {
+                $('#originalBaselineCard').text(baselineCO2.toFixed(2));
+                $('#adjBaselineCard').text(baselineCO2.toFixed(2));
+            }, 100);
         }
     });
 

@@ -775,12 +775,56 @@ $(document).ready(function() {
         }
     });
 
-    // Calculate button click handler
-    $('#calculateBtn').on('click', calculateEmissions);
+    // Direct fuel calculation function using existing inputs
+    function calculateDirectFuelEmissions() {
+        // Get fuel consumption values from existing inputs
+        const lfoConsumption = parseFloat($('#lfoConsumption').val()) || 0;
+        const mgoConsumption = parseFloat($('#mgoConsumption').val()) || 0;
+        const hfoConsumption = parseFloat($('#hfoConsumption').val()) || 0;
+        const cargoQuantity = parseFloat($('#cargoQuantity').val()) || 133000;
+        
+        // Calculate total CO2 emissions using emission factors
+        const totalCO2 = (lfoConsumption * emissionFactors.lfo) + 
+                        (mgoConsumption * emissionFactors.mgo) + 
+                        (hfoConsumption * emissionFactors.hfo);
+        
+        // Convert to gCO2 per 1000MT cargo: (Total CO2 / cargo quantity) * 1000
+        const actualCO2per1000MT = (totalCO2 / cargoQuantity) * 1000;
+        
+        // Get selected route baseline
+        const selectedRoute = $('#routeSelect').val();
+        const baselineCO2 = routeBaselines[selectedRoute] || 0;
+        
+        // Calculate emission reduction percentage
+        const emissionReduction = ((baselineCO2 - actualCO2per1000MT) / baselineCO2) * 100;
+        
+        // Show results summary
+        $('#summaryView').removeClass('hidden');
+        $('#detailsToggle').removeClass('hidden');
+        
+        // Update result cards using existing function
+        updateResultsSummary(baselineCO2, actualCO2per1000MT, emissionReduction);
+        
+        // Console log for verification
+        console.log('=== DIRECT FUEL CALCULATION ===');
+        console.log(`LFO: ${lfoConsumption} tonnes × ${emissionFactors.lfo} = ${(lfoConsumption * emissionFactors.lfo).toFixed(2)} tonnes CO2`);
+        console.log(`MGO: ${mgoConsumption} tonnes × ${emissionFactors.mgo} = ${(mgoConsumption * emissionFactors.mgo).toFixed(2)} tonnes CO2`);
+        console.log(`HFO: ${hfoConsumption} tonnes × ${emissionFactors.hfo} = ${(hfoConsumption * emissionFactors.hfo).toFixed(2)} tonnes CO2`);
+        console.log(`Total CO2: ${totalCO2.toFixed(2)} tonnes`);
+        console.log(`Cargo: ${cargoQuantity} tonnes`);
+        console.log(`Actual CO2/1000MT: ${actualCO2per1000MT.toFixed(2)} gCO2/1000MT`);
+        console.log(`Baseline: ${baselineCO2.toFixed(2)} gCO2/1000MT`);
+        console.log(`Reduction: ${emissionReduction.toFixed(2)}%`);
+        
+        return actualCO2per1000MT;
+    }
+
+    // Calculate button click handler - use direct calculation
+    $('#calculateBtn').on('click', calculateDirectFuelEmissions);
 
     // Initialize with sample calculation if default values are present
     if (validateInputs()) {
-        setTimeout(calculateEmissions, 1000);
+        setTimeout(calculateDirectFuelEmissions, 1000);
     }
 
     // Smooth scrolling for better UX
@@ -811,7 +855,7 @@ $(document).ready(function() {
         // Ctrl/Cmd + Enter to calculate
         if ((e.ctrlKey || e.metaKey) && e.keyCode === 13) {
             e.preventDefault();
-            calculateEmissions();
+            calculateDirectFuelEmissions();
         }
         
         // Ctrl/Cmd + D to toggle detailed view

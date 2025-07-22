@@ -279,6 +279,12 @@ $(document).ready(function() {
         const selectedRoute = $(this).val();
         const baselineCO2 = routeBaselines[selectedRoute] || routeBaselines['narvik'];
         
+        console.log('DEBUG Route Change:');
+        console.log('- Selected route:', selectedRoute);
+        console.log('- routeBaselines object:', routeBaselines);
+        console.log('- Calculated baselineCO2:', baselineCO2);
+        console.log('- Card will show:', baselineCO2.toFixed(2));
+        
         // Update the baseline cards immediately
         $('#originalBaselineCard').text(baselineCO2.toFixed(2));
         $('#adjBaselineCard').text(baselineCO2.toFixed(2));

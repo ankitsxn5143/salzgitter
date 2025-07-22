@@ -1,0 +1,118 @@
+/* Custom styles for maritime calculator */
+:root {
+    --maritime-primary: #0284c7;
+    --maritime-secondary: #0ea5e9;
+    --maritime-accent: #38bdf8;
+}
+
+.dark {
+    --maritime-primary: #38bdf8;
+    --maritime-secondary: #0ea5e9;
+    --maritime-accent: #7dd3fc;
+}
+
+/* Route selection styling */
+.route-option {
+    transition: all 0.3s ease;
+}
+
+.route-option:has(input:checked) {
+    border-color: var(--maritime-primary);
+    background-color: rgba(2, 132, 199, 0.05);
+}
+
+.dark .route-option:has(input:checked) {
+    background-color: rgba(56, 189, 248, 0.1);
+}
+
+/* Table styling */
+table {
+    font-size: 0.875rem;
+}
+
+.table-cell-highlight {
+    background-color: rgba(2, 132, 199, 0.1);
+}
+
+.dark .table-cell-highlight {
+    background-color: rgba(56, 189, 248, 0.1);
+}
+
+/* Animation for calculations */
+.calculating {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
+    .overflow-x-auto {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    table {
+        font-size: 0.75rem;
+    }
+    
+    th, td {
+        padding: 0.5rem !important;
+        min-width: 80px;
+    }
+}
+
+/* Loading states */
+.loading-skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+.dark .loading-skeleton {
+    background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+    background-size: 200% 100%;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Input focus states */
+input:focus {
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+}
+
+.dark input:focus {
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+}
+
+/* Button hover effects */
+button {
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dark button:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Card hover effects */
+.bg-white, .dark .bg-gray-800 {
+    transition: all 0.3s ease;
+}
+
+.bg-white:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.dark .bg-gray-800:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}

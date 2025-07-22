@@ -288,20 +288,43 @@ $(document).ready(function() {
         tbody.empty();
         
         routeData.legs.forEach((leg, index) => {
+            // Determine voyage type class and icon
+            let voyageTypeClass = '';
+            let voyageIcon = '';
+            if (leg.type && leg.type.includes('ballast')) {
+                voyageTypeClass = 'voyage-leg-ballast';
+                voyageIcon = '⚓';
+            } else if (leg.type && leg.type.includes('laden')) {
+                voyageTypeClass = 'voyage-leg-laden';
+                voyageIcon = '📦';
+            } else if (leg.type && leg.type.includes('port')) {
+                voyageTypeClass = 'voyage-leg-port';
+                voyageIcon = '🏭';
+            }
+
+            // Add fuel type styling for consumption columns
+            const lfoClass = leg.lfoBase > 0 ? 'fuel-type-lfo' : '';
+            const mgoClass = leg.mgoBase > 0 ? 'fuel-type-mgo' : '';
+            const hfoClass = leg.hfoBase > 0 ? 'fuel-type-hfo' : '';
+
             const row = $(`
-                <tr class="border-b hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
-                    <td class="border border-gray-300 dark:border-gray-600 p-3 font-medium">${leg.name}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-center">${leg.distance}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-center">${leg.speed}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-center">${leg.baseDays}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-center">${leg.adjMarginDays}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-center">${leg.lfoBase}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-center">${leg.mgoBase}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-center">${leg.hfoBase}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-center font-semibold text-blue-600 dark:text-blue-400">${leg.co2Exposure.toFixed(2)}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-center font-semibold text-green-600 dark:text-green-400" id="actualCO2_${index}">--</td>
+                <tr class="table-cell-animate" style="animation-delay: ${index * 0.05}s">
+                    <td class="table-leg-name ${voyageTypeClass}">
+                        <span class="voyage-icon">${voyageIcon}</span>
+                        ${leg.name}
+                    </td>
+                    <td class="table-numeric">${leg.distance}</td>
+                    <td class="table-numeric">${leg.speed}</td>
+                    <td class="table-numeric">${leg.baseDays}</td>
+                    <td class="table-numeric">${leg.adjMarginDays}</td>
+                    <td class="table-numeric ${lfoClass}">${leg.lfoBase}</td>
+                    <td class="table-numeric ${mgoClass}">${leg.mgoBase}</td>
+                    <td class="table-numeric ${hfoClass}">${leg.hfoBase}</td>
+                    <td class="table-co2-exposure table-numeric data-progress">${leg.co2Exposure.toFixed(2)}</td>
+                    <td class="table-actual-co2 table-numeric data-progress" id="actualCO2_${index}">--</td>
                 </tr>
             `);
+            
             tbody.append(row);
         });
     }
@@ -454,18 +477,22 @@ $(document).ready(function() {
             { name: 'Loading/Discharging', data: routeData.baseline['Loading/Discharging'], actual: null }
         ];
 
-        stages.forEach(stage => {
+        stages.forEach((stage, index) => {
             const row = $(`
-                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                    <td class="border border-gray-300 dark:border-gray-600 p-2 font-medium">${stage.name}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">${stage.data.speed}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">${stage.data.cons}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">${stage.actual !== null ? stage.actual.toFixed(1) : 'N/A'}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">N/A</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">--</td>
+                <tr class="table-cell-animate">
+                    <td class="table-leg-name">${stage.name}</td>
+                    <td class="table-numeric">${stage.data.speed}</td>
+                    <td class="table-numeric">${stage.data.cons}</td>
+                    <td class="table-numeric">${stage.actual !== null ? stage.actual.toFixed(1) : 'N/A'}</td>
+                    <td class="table-numeric">N/A</td>
+                    <td class="table-numeric">--</td>
                 </tr>
             `);
-            tbody.append(row);
+            
+            // Add staggered animation delay
+            setTimeout(() => {
+                tbody.append(row);
+            }, index * 50);
         });
     }
 

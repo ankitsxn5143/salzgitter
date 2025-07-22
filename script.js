@@ -244,6 +244,12 @@ $(document).ready(function() {
         hfo: 3.716  // HFO emission factor
     };
 
+    // Route baselines (gCO2 per 1000MT cargo) - using LFO for Non-ECA areas
+    const routeBaselines = {
+        'narvik': 11.12,        // Narvik Route baseline
+        'seven-island': 30.80   // Seven Island baseline
+    };
+
     // Theme management
     function initializeTheme() {
         const savedTheme = localStorage.getItem('theme') || 'light';

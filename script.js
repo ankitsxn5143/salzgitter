@@ -309,10 +309,7 @@ $(document).ready(function() {
 
             const row = $(`
                 <tr class="table-cell-animate" style="animation-delay: ${index * 0.05}s">
-                    <td class="table-leg-name ${voyageTypeClass}">
-                        <span class="voyage-icon">${voyageIcon}</span>
-                        ${leg.name}
-                    </td>
+                    <td class="table-leg-name">${leg.name}</td>
                     <td class="table-numeric">${leg.distance}</td>
                     <td class="table-numeric">${leg.speed}</td>
                     <td class="table-numeric">${leg.baseDays}</td>
@@ -320,8 +317,8 @@ $(document).ready(function() {
                     <td class="table-numeric ${lfoClass}">${leg.lfoBase}</td>
                     <td class="table-numeric ${mgoClass}">${leg.mgoBase}</td>
                     <td class="table-numeric ${hfoClass}">${leg.hfoBase}</td>
-                    <td class="table-co2-exposure table-numeric data-progress">${leg.co2Exposure.toFixed(2)}</td>
-                    <td class="table-actual-co2 table-numeric data-progress" id="actualCO2_${index}">--</td>
+                    <td class="table-co2-exposure table-numeric">${leg.co2Exposure.toFixed(2)}</td>
+                    <td class="table-actual-co2 table-numeric" id="actualCO2_${index}">--</td>
                 </tr>
             `);
             

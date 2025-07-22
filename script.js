@@ -46,16 +46,16 @@ $(document).ready(function() {
                     name: "Loading", 
                     distance: 0, 
                     speed: 0, 
-                    baseDays: 2.5000, 
-                    adjMarginDays: 3.6896, 
+                    baseDays: 2.8000, 
+                    adjMarginDays: 2.8000, 
                     lfoBase: 0, 
-                    mgoBase: 14.36, 
+                    mgoBase: 11.2, 
                     hfoBase: 0, 
-                    co2Exposure: 55.65, 
-                    co2WTW: 56.03, 
-                    totalCO2: 55.65,
+                    co2Exposure: 43.47, 
+                    co2WTW: 43.78, 
+                    totalCO2: 43.47,
                     type: 'port-loading',
-                    description: 'Loading operations at port'
+                    description: 'Loading operations at Narvik'
                 },
                 { 
                     name: "Laden ECA", 
@@ -91,16 +91,16 @@ $(document).ready(function() {
                     name: "Discharging", 
                     distance: 0, 
                     speed: 0, 
-                    baseDays: 3.3000, 
-                    adjMarginDays: 4.1981, 
+                    baseDays: 3.8000, 
+                    adjMarginDays: 3.8000, 
                     lfoBase: 0, 
-                    mgoBase: 16.54, 
-                    hfoBase: 100, 
-                    co2Exposure: 64.13, 
-                    co2WTW: 64.56, 
-                    totalCO2: 64.13,
+                    mgoBase: 15.2, 
+                    hfoBase: 0, 
+                    co2Exposure: 58.98, 
+                    co2WTW: 59.39, 
+                    totalCO2: 58.98,
                     type: 'port-discharging',
-                    description: 'Discharging operations at port'
+                    description: 'Discharging operations at Hamburg'
                 },
                 { 
                     name: "Post-Ballast ECA", 
@@ -162,16 +162,16 @@ $(document).ready(function() {
                     name: "Loading", 
                     distance: 0, 
                     speed: 0, 
-                    baseDays: 2.2000, 
-                    adjMarginDays: 3.2000, 
+                    baseDays: 2.3000, 
+                    adjMarginDays: 2.3000, 
                     lfoBase: 0, 
-                    mgoBase: 12.80, 
+                    mgoBase: 9.2, 
                     hfoBase: 0, 
-                    co2Exposure: 48.60, 
-                    co2WTW: 49.00, 
-                    totalCO2: 48.60,
+                    co2Exposure: 35.71, 
+                    co2WTW: 35.96, 
+                    totalCO2: 35.71,
                     type: 'port-loading',
-                    description: 'Loading operations at port'
+                    description: 'Loading operations at Seven Island'
                 },
                 { 
                     name: "Laden ECA", 
@@ -207,16 +207,16 @@ $(document).ready(function() {
                     name: "Discharging", 
                     distance: 0, 
                     speed: 0, 
-                    baseDays: 2.9000, 
+                    baseDays: 3.8000, 
                     adjMarginDays: 3.8000, 
                     lfoBase: 0, 
-                    mgoBase: 14.20, 
-                    hfoBase: 85, 
-                    co2Exposure: 56.40, 
-                    co2WTW: 56.80, 
-                    totalCO2: 56.40,
+                    mgoBase: 15.2, 
+                    hfoBase: 0, 
+                    co2Exposure: 58.98, 
+                    co2WTW: 59.39, 
+                    totalCO2: 58.98,
                     type: 'port-discharging',
-                    description: 'Discharging operations at port'
+                    description: 'Discharging operations at Hamburg'
                 },
                 { 
                     name: "Post-Ballast ECA", 
@@ -430,15 +430,67 @@ $(document).ready(function() {
         return (totalCO2 * 1000) / inputs.cargoQuantity;
     }
 
-    // Calculate actual CO2 per 1000MT
+    // Calculate actual CO2 based on maritime logic with sea margins
     function calculateActualCO2(routeData, inputs) {
-        // Total fuel consumption from inputs
-        const totalFuelCO2 = (inputs.lfoConsumption * emissionFactors.lfo * 1000) + 
-                           (inputs.hfoConsumption * emissionFactors.hfo * 1000) + 
-                           (inputs.mgoConsumption * emissionFactors.mgo * 1000);
-
+        let totalMGO = 0;
+        let totalHFO = 0;
+        let totalLFO = 0;
+        
+        routeData.legs.forEach(leg => {
+            let actualDays = 0;
+            let consumptionPerDay = 0;
+            let speed = 0;
+            
+            // Determine leg type and calculate actual days
+            if (leg.type && leg.type.includes('ballast')) {
+                // Ballast legs: 43 tons/day, 13 knots speed
+                consumptionPerDay = 43;
+                speed = 13;
+                const baseDays = leg.distance / speed / 24;
+                const seaMarginDays = baseDays * (inputs.seaMarginBallast / 100);
+                actualDays = baseDays + seaMarginDays;
+                
+            } else if (leg.type && leg.type.includes('laden')) {
+                // Laden legs: 43 tons/day, 12 knots speed  
+                consumptionPerDay = 43;
+                speed = 12;
+                const baseDays = leg.distance / speed / 24;
+                const seaMarginDays = baseDays * (inputs.seaMarginLaden / 100);
+                actualDays = baseDays + seaMarginDays;
+                
+            } else if (leg.type === 'port-loading') {
+                // Loading: 4.0 tons/day, actual days from input
+                consumptionPerDay = 4.0;
+                actualDays = inputs.actualLoadingDays;
+                
+            } else if (leg.type === 'port-discharging') {
+                // Discharging: 4.0 tons/day, actual days from input
+                consumptionPerDay = 4.0;
+                actualDays = inputs.actualDischargingDays;
+            }
+            
+            // Calculate fuel consumption based on ECA/Non-ECA
+            const totalConsumption = actualDays * consumptionPerDay;
+            
+            if (leg.type && leg.type.includes('eca')) {
+                // ECA areas use MGO
+                totalMGO += totalConsumption;
+            } else if (leg.type && leg.type.includes('non-eca')) {
+                // Non-ECA areas use HFO  
+                totalHFO += totalConsumption;
+            } else {
+                // Port operations use MGO
+                totalMGO += totalConsumption;
+            }
+        });
+        
+        // Calculate CO2 emissions from total fuel consumption
+        const totalCO2 = (totalLFO * emissionFactors.lfo) + 
+                        (totalMGO * emissionFactors.mgo) + 
+                        (totalHFO * emissionFactors.hfo);
+        
         // Convert to gCO2 per 1000MT cargo
-        return (totalFuelCO2 * 1000) / inputs.cargoQuantity;
+        return (totalCO2 * 1000 * 1000) / inputs.cargoQuantity;
     }
 
     // Update summary view with animated counters and visual bars
@@ -493,62 +545,67 @@ $(document).ready(function() {
         });
     }
 
-    // Calculate and populate actual CO2 WTW values in detailed table
+    // Calculate and populate actual CO2 values in detailed table using proper maritime logic
     function calculateActualCO2Values(routeData, inputs) {
         routeData.legs.forEach((leg, index) => {
-            // Calculate adjusted values based on sea margins and actual inputs
-            let adjMarginDays = leg.adjMarginDays;
+            let actualDays = 0;
+            let consumptionPerDay = 0;
+            let speed = 0;
+            let legMGO = 0, legHFO = 0, legLFO = 0;
             
-            // Apply sea margin adjustments based on leg type
+            // Calculate actual days based on leg type and maritime logic
             if (leg.type && leg.type.includes('ballast')) {
-                adjMarginDays *= (inputs.seaMarginBallast / 2.5); // Adjust based on input vs baseline
+                // Ballast legs: 43 tons/day, 13 knots speed
+                consumptionPerDay = 43;
+                speed = 13;
+                const baseDays = leg.distance / speed / 24;
+                const seaMarginDays = baseDays * (inputs.seaMarginBallast / 100);
+                actualDays = baseDays + seaMarginDays;
+                
             } else if (leg.type && leg.type.includes('laden')) {
-                adjMarginDays *= (inputs.seaMarginLaden / 3.2); // Adjust based on input vs baseline
+                // Laden legs: 43 tons/day, 12 knots speed  
+                consumptionPerDay = 43;
+                speed = 12;
+                const baseDays = leg.distance / speed / 24;
+                const seaMarginDays = baseDays * (inputs.seaMarginLaden / 100);
+                actualDays = baseDays + seaMarginDays;
+                
+            } else if (leg.type === 'port-loading') {
+                // Loading: 4.0 tons/day, actual days from input
+                consumptionPerDay = 4.0;
+                actualDays = inputs.actualLoadingDays;
+                
+            } else if (leg.type === 'port-discharging') {
+                // Discharging: 4.0 tons/day, actual days from input
+                consumptionPerDay = 4.0;
+                actualDays = inputs.actualDischargingDays;
             }
             
-            // Apply actual loading/discharging days
-            if (leg.type === 'port-loading' && inputs.actualLoadingDays) {
-                adjMarginDays = inputs.actualLoadingDays;
-            } else if (leg.type === 'port-discharging' && inputs.actualDischargingDays) {
-                adjMarginDays = inputs.actualDischargingDays;
-            }
-
-            // Calculate fuel consumption based on actual inputs proportionally
-            const totalInputFuel = inputs.lfoConsumption + inputs.hfoConsumption + inputs.mgoConsumption;
-            const baseFuel = leg.lfoBase + leg.mgoBase + leg.hfoBase;
-            const legFuelRatio = baseFuel > 0 ? baseFuel / 100 : 0.01; // Normalize with minimum
+            // Calculate total fuel consumption for this leg
+            const totalConsumption = actualDays * consumptionPerDay;
             
-            // Distribute actual consumption proportionally based on leg type and baseline
-            let legLFO = 0, legMGO = 0, legHFO = 0;
-            
+            // Assign fuel type based on ECA/Non-ECA designation
             if (leg.type && leg.type.includes('eca')) {
-                // ECA zones prefer LFO/MGO
-                legMGO = legFuelRatio * inputs.mgoConsumption * 0.6;
-                legLFO = legFuelRatio * inputs.lfoConsumption * 0.3;
-                legHFO = legFuelRatio * inputs.hfoConsumption * 0.1;
+                // ECA areas use MGO
+                legMGO = totalConsumption;
             } else if (leg.type && leg.type.includes('non-eca')) {
-                // Non-ECA zones can use HFO
-                legHFO = legFuelRatio * inputs.hfoConsumption * 0.7;
-                legLFO = legFuelRatio * inputs.lfoConsumption * 0.2;
-                legMGO = legFuelRatio * inputs.mgoConsumption * 0.1;
+                // Non-ECA areas use HFO  
+                legHFO = totalConsumption;
             } else {
-                // Port operations - typically MGO
-                legMGO = legFuelRatio * inputs.mgoConsumption * 0.8;
-                legLFO = legFuelRatio * inputs.lfoConsumption * 0.2;
+                // Port operations use MGO
+                legMGO = totalConsumption;
             }
 
-            // Calculate CO2 for this leg
-            const legCO2 = (legLFO * emissionFactors.lfo + legMGO * emissionFactors.mgo + legHFO * emissionFactors.hfo) / 1000;
+            // Calculate CO2 emissions for this leg
+            const legCO2 = (legLFO * emissionFactors.lfo) + 
+                          (legMGO * emissionFactors.mgo) + 
+                          (legHFO * emissionFactors.hfo);
             
-            // Calculate actual CO2 WTW for this leg (adding Well-to-Wake factor)
-            const actualCO2WTW = legCO2 * 1.05;
+            // Convert to gCO2 and apply to 1000MT cargo
+            const actualCO2WTW = (legCO2 * 1000) / inputs.cargoQuantity;
 
             // Update the table cell with calculated value
             $(`#actualCO2_${index}`).text(actualCO2WTW.toFixed(2));
-            
-            // Add custom calculation placeholder comment for user modifications
-            // USER CUSTOM CALCULATION AREA - You can modify the actualCO2WTW calculation above
-            // Example: actualCO2WTW = legCO2 * customFactor + additionalEmissions;
         });
     }
 

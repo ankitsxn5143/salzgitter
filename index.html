@@ -33,18 +33,33 @@
     </script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
-    <div class="min-h-screen">
+    <!-- Animated Background -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute inset-0 bg-gradient-to-br from-maritime-500/10 via-transparent to-maritime-600/10"></div>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-maritime-400/20 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+        <div class="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-400/20 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse animation-delay-2s"></div>
+        <div class="absolute bottom-1/4 left-1/3 w-96 h-96 bg-purple-400/20 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse animation-delay-4s"></div>
+    </div>
+    
+    <div class="min-h-screen relative z-10">
         <!-- Header -->
-        <header class="bg-white dark:bg-gray-800 shadow-lg border-b border-gray-200 dark:border-gray-700">
-            <div class="container mx-auto px-6 py-4">
+        <header class="header-enhanced shadow-lg sticky top-0 z-20">
+            <div class="container mx-auto px-6 py-6">
                 <div class="flex justify-between items-center">
-                    <div class="flex items-center space-x-3">
-                        <i class="fas fa-ship text-2xl text-maritime-600 dark:text-maritime-400"></i>
-                        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Maritime CO2 Calculator</h1>
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-gradient-to-br from-maritime-500 to-maritime-600 p-3 rounded-xl shadow-lg">
+                            <i class="fas fa-ship text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-3xl font-bold bg-gradient-to-r from-maritime-600 to-maritime-500 bg-clip-text text-transparent glow-text">
+                                Maritime CO2 Calculator
+                            </h1>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 font-medium">Optimize Your Shipping Emissions</p>
+                        </div>
                     </div>
-                    <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                        <i class="fas fa-sun dark:hidden text-yellow-500"></i>
-                        <i class="fas fa-moon hidden dark:inline text-blue-400"></i>
+                    <button id="themeToggle" class="p-3 rounded-xl bg-white dark:bg-gray-700 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                        <i class="fas fa-sun dark:hidden text-yellow-500 text-lg"></i>
+                        <i class="fas fa-moon hidden dark:inline text-blue-400 text-lg"></i>
                     </button>
                 </div>
             </div>
@@ -52,108 +67,154 @@
 
         <div class="container mx-auto px-6 py-8">
             <!-- Route Selection -->
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
-                <h2 class="text-xl font-semibold mb-4 flex items-center">
-                    <i class="fas fa-route mr-2 text-maritime-600"></i>
-                    Route Selection
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8 card-enhanced">
+                <h2 class="text-2xl font-bold mb-6 flex items-center bg-gradient-to-r from-maritime-600 to-maritime-500 bg-clip-text text-transparent">
+                    <i class="fas fa-route mr-3 text-maritime-600 text-2xl"></i>
+                    Choose Your Route
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <label class="flex items-center p-4 border-2 border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors route-option">
-                        <input type="radio" name="route" value="narvik" class="mr-3 text-maritime-600" checked>
-                        <div>
-                            <div class="font-semibold">Narvik Route</div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400">Rotterdam - Narvik - Hamburg - Elbe 1</div>
+                    <label class="flex items-center p-6 border-2 border-gray-200 dark:border-gray-600 rounded-xl cursor-pointer transition-colors route-option glow-border">
+                        <input type="radio" name="route" value="narvik" class="mr-4 text-maritime-600 scale-125" checked>
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-maritime-100 dark:bg-maritime-900 p-3 rounded-lg">
+                                <i class="fas fa-ship text-maritime-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-lg">Narvik Route</div>
+                                <div class="text-sm opacity-75">Rotterdam - Narvik - Hamburg - Elbe 1</div>
+                                <div class="text-xs text-maritime-600 dark:text-maritime-400 mt-1">• Premium baseline route</div>
+                            </div>
                         </div>
                     </label>
-                    <label class="flex items-center p-4 border-2 border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors route-option">
-                        <input type="radio" name="route" value="seven-island" class="mr-3 text-maritime-600">
-                        <div>
-                            <div class="font-semibold">Seven Island Baseline</div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400">Alternative baseline route</div>
+                    <label class="flex items-center p-6 border-2 border-gray-200 dark:border-gray-600 rounded-xl cursor-pointer transition-colors route-option glow-border">
+                        <input type="radio" name="route" value="seven-island" class="mr-4 text-maritime-600 scale-125">
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-maritime-100 dark:bg-maritime-900 p-3 rounded-lg">
+                                <i class="fas fa-anchor text-maritime-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-lg">Seven Island Baseline</div>
+                                <div class="text-sm opacity-75">Alternative baseline route</div>
+                                <div class="text-xs text-maritime-600 dark:text-maritime-400 mt-1">• Secondary baseline option</div>
+                            </div>
                         </div>
                     </label>
                 </div>
             </div>
 
             <!-- Input Form -->
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
-                <h2 class="text-xl font-semibold mb-6 flex items-center">
-                    <i class="fas fa-keyboard mr-2 text-maritime-600"></i>
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8 card-enhanced">
+                <h2 class="text-2xl font-bold mb-8 flex items-center bg-gradient-to-r from-maritime-600 to-maritime-500 bg-clip-text text-transparent">
+                    <i class="fas fa-cogs mr-3 text-maritime-600 text-2xl"></i>
                     Voyage Parameters
                 </h2>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Cargo Quantity -->
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Cargo Quantity (MT)</label>
-                        <input type="number" id="cargoQuantity" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter cargo quantity" value="133000">
+                    <div class="group">
+                        <label class="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
+                            <i class="fas fa-weight-hanging mr-2 text-maritime-500"></i>
+                            Cargo Quantity (MT)
+                        </label>
+                        <input type="number" id="cargoQuantity" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter cargo quantity" value="133000">
                     </div>
 
                     <!-- Sea Margin Days - Ballast -->
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Sea Margin Days (Ballast)</label>
-                        <input type="number" id="seaMarginBallast" step="0.1" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter ballast days" value="2.5">
+                    <div class="group">
+                        <label class="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
+                            <i class="fas fa-calendar-day mr-2 text-maritime-500"></i>
+                            Sea Margin Days (Ballast)
+                        </label>
+                        <input type="number" id="seaMarginBallast" step="0.1" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter ballast days" value="2.5">
                     </div>
 
                     <!-- Sea Margin Days - Laden -->
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Sea Margin Days (Laden)</label>
-                        <input type="number" id="seaMarginLaden" step="0.1" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter laden days" value="3.2">
+                    <div class="group">
+                        <label class="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
+                            <i class="fas fa-calendar-check mr-2 text-maritime-500"></i>
+                            Sea Margin Days (Laden)
+                        </label>
+                        <input type="number" id="seaMarginLaden" step="0.1" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter laden days" value="3.2">
                     </div>
 
                     <!-- LFO Consumption -->
-                    <div>
-                        <label class="block text-sm font-medium mb-2">LFO Consumption (MT)</label>
-                        <input type="number" id="lfoConsumption" step="0.01" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter LFO consumption" value="61.02">
+                    <div class="group">
+                        <label class="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
+                            <i class="fas fa-gas-pump mr-2 text-yellow-500"></i>
+                            LFO Consumption (MT)
+                        </label>
+                        <input type="number" id="lfoConsumption" step="0.01" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter LFO consumption" value="61.02">
                     </div>
 
                     <!-- HFO Consumption -->
-                    <div>
-                        <label class="block text-sm font-medium mb-2">HFO Consumption (MT)</label>
-                        <input type="number" id="hfoConsumption" step="0.01" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter HFO consumption" value="88.77">
+                    <div class="group">
+                        <label class="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
+                            <i class="fas fa-oil-can mr-2 text-amber-600"></i>
+                            HFO Consumption (MT)
+                        </label>
+                        <input type="number" id="hfoConsumption" step="0.01" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter HFO consumption" value="88.77">
                     </div>
 
                     <!-- MGO Consumption -->
-                    <div>
-                        <label class="block text-sm font-medium mb-2">MGO Consumption (MT)</label>
-                        <input type="number" id="mgoConsumption" step="0.01" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter MGO consumption" value="14.36">
+                    <div class="group">
+                        <label class="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
+                            <i class="fas fa-tint mr-2 text-blue-500"></i>
+                            MGO Consumption (MT)
+                        </label>
+                        <input type="number" id="mgoConsumption" step="0.01" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter MGO consumption" value="14.36">
                     </div>
                 </div>
 
-                <button id="calculateBtn" class="mt-6 bg-maritime-600 hover:bg-maritime-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center">
-                    <i class="fas fa-calculator mr-2"></i>
-                    Calculate Emissions
-                </button>
+                <div class="mt-8 text-center">
+                    <button id="calculateBtn" class="btn-gradient text-white px-8 py-4 rounded-xl font-bold text-lg transition-colors flex items-center mx-auto shadow-lg">
+                        <i class="fas fa-calculator mr-3 text-xl"></i>
+                        Calculate CO2 Emissions
+                        <i class="fas fa-arrow-right ml-3 text-lg opacity-75"></i>
+                    </button>
+                </div>
             </div>
 
             <!-- Summary View -->
-            <div id="summaryView" class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8 hidden">
-                <h2 class="text-xl font-semibold mb-6 flex items-center">
-                    <i class="fas fa-chart-bar mr-2 text-maritime-600"></i>
-                    Emissions Summary
+            <div id="summaryView" class="card-enhanced rounded-xl shadow-lg p-8 mb-8 hidden">
+                <h2 class="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-maritime-600 to-maritime-500 bg-clip-text text-transparent">
+                    <i class="fas fa-chart-bar mr-3 text-maritime-600"></i>
+                    CO2 Emissions Analysis
                 </h2>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 p-4 rounded-lg">
-                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Baseline CO2/1000MT</div>
-                        <div class="text-2xl font-bold text-blue-600 dark:text-blue-400" id="baselineCO2">--</div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="summary-card p-6 rounded-2xl text-center">
+                        <div class="mb-4">
+                            <i class="fas fa-industry text-4xl text-blue-500 mb-2"></i>
+                        </div>
+                        <div class="text-sm font-semibold text-gray-600 dark:text-gray-300 mb-2 uppercase tracking-wider">Baseline CO2/1000MT</div>
+                        <div class="text-3xl font-bold text-blue-600 dark:text-blue-400 animated-number" id="baselineCO2">--</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">Industry Standard</div>
                     </div>
-                    <div class="bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 p-4 rounded-lg">
-                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Actual CO2/1000MT</div>
-                        <div class="text-2xl font-bold text-green-600 dark:text-green-400" id="actualCO2">--</div>
+                    <div class="summary-card p-6 rounded-2xl text-center">
+                        <div class="mb-4">
+                            <i class="fas fa-leaf text-4xl text-green-500 mb-2"></i>
+                        </div>
+                        <div class="text-sm font-semibold text-gray-600 dark:text-gray-300 mb-2 uppercase tracking-wider">Actual CO2/1000MT</div>
+                        <div class="text-3xl font-bold text-green-600 dark:text-green-400 animated-number" id="actualCO2">--</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">Your Performance</div>
                     </div>
-                    <div class="bg-gradient-to-r from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 p-4 rounded-lg">
-                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Emission Reduction</div>
-                        <div class="text-2xl font-bold text-purple-600 dark:text-purple-400" id="emissionReduction">--</div>
+                    <div class="summary-card p-6 rounded-2xl text-center">
+                        <div class="mb-4">
+                            <i class="fas fa-percentage text-4xl text-purple-500 mb-2"></i>
+                        </div>
+                        <div class="text-sm font-semibold text-gray-600 dark:text-gray-300 mb-2 uppercase tracking-wider">Emission Reduction</div>
+                        <div class="text-3xl font-bold text-purple-600 dark:text-purple-400 animated-number" id="emissionReduction">--</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">Environmental Impact</div>
                     </div>
                 </div>
             </div>
 
             <!-- Detailed View Toggle -->
-            <div id="detailsToggle" class="mb-4 hidden">
-                <button id="showDetailsBtn" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center">
-                    <i class="fas fa-table mr-2"></i>
-                    Show Detailed Analysis
+            <div id="detailsToggle" class="mb-8 text-center hidden">
+                <button id="showDetailsBtn" class="btn-gradient text-white px-6 py-3 rounded-xl font-semibold text-base transition-colors flex items-center mx-auto shadow-lg">
+                    <i class="fas fa-microscope mr-3"></i>
+                    View Detailed Analysis
+                    <i class="fas fa-chevron-down ml-3"></i>
                 </button>
             </div>
 

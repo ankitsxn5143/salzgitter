@@ -99,3 +99,17 @@ Preferred communication style: Simple, everyday language.
 - **Nested objects**: Baseline data organized hierarchically for easy access
 - **Predefined routes**: Common shipping routes pre-calculated for accuracy
 - **Flexible emission factors**: Separate emission factors allow for easy updates
+
+## Recent Updates
+
+### July 22, 2025 - Enhanced Visual Attractiveness
+- **Modern UI Design**: Implemented gradient backgrounds, glassmorphism effects, and smooth animations
+- **Interactive Route Selection**: Enhanced route cards with hover effects, gradient selections, and animated backgrounds
+- **Enhanced Input Fields**: Added focus scaling effects, color-coded labels with icons, and improved spacing
+- **Animated Summary Cards**: Implemented rotating border effects, glass morphism styling, and hover transformations
+- **Loading States**: Enhanced button animations with spinning icons, glow effects, and dynamic text changes
+- **Number Counters**: Added smooth counting animations for result display with staggered timing
+- **Animated Background**: Floating gradient elements with blur effects for visual depth
+- **Enhanced Header**: Sticky header with glass morphism, gradient branding, and improved navigation
+- **Smart Color Coding**: Dynamic color changes based on emission reduction performance (green/yellow/red)
+- **Micro-interactions**: Subtle animations on hover, focus, and click for better user experience

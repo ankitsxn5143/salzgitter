@@ -124,8 +124,9 @@ $(document).ready(function() {
             mgoConsumption: parseFloat($('#mgoConsumption').val())
         };
 
-        // Show loading state
-        $('#calculateBtn').addClass('calculating').prop('disabled', true);
+        // Show loading state with enhanced visual feedback
+        $('#calculateBtn').addClass('calculating-glow').prop('disabled', true)
+            .html('<i class="fas fa-spinner fa-spin mr-3"></i>Calculating...<i class="fas fa-cog fa-spin ml-3"></i>');
 
         // Calculate baseline CO2
         const baselineCO2 = calculateBaselineCO2(routeData, inputs);
@@ -147,10 +148,11 @@ $(document).ready(function() {
         $('#summaryView').removeClass('hidden').hide().fadeIn(600);
         $('#detailsToggle').removeClass('hidden').hide().fadeIn(600);
         
-        // Remove loading state
+        // Remove loading state and restore button
         setTimeout(() => {
-            $('#calculateBtn').removeClass('calculating').prop('disabled', false);
-        }, 1000);
+            $('#calculateBtn').removeClass('calculating-glow').prop('disabled', false)
+                .html('<i class="fas fa-calculator mr-3 text-xl"></i>Calculate CO2 Emissions<i class="fas fa-arrow-right ml-3 text-lg opacity-75"></i>');
+        }, 1200);
     }
 
     // Calculate baseline CO2 per 1000MT
@@ -180,23 +182,46 @@ $(document).ready(function() {
         return (totalFuelCO2 * 1000) / inputs.cargoQuantity;
     }
 
-    // Update summary view
+    // Update summary view with animated counters
     function updateSummaryView(baselineCO2, actualCO2, emissionReduction) {
-        $('#baselineCO2').text(baselineCO2.toFixed(2) + ' g');
-        $('#actualCO2').text(actualCO2.toFixed(2) + ' g');
-        $('#emissionReduction').text(emissionReduction.toFixed(1) + '%');
+        // Animate the numbers counting up
+        animateNumber('#baselineCO2', 0, baselineCO2, ' g', 1000);
+        animateNumber('#actualCO2', 0, actualCO2, ' g', 1200);
+        animateNumber('#emissionReduction', 0, emissionReduction, '%', 1400);
         
-        // Add color coding for emission reduction
-        const reductionElement = $('#emissionReduction');
-        reductionElement.removeClass('text-red-600 text-green-600 text-yellow-600');
+        // Add color coding for emission reduction with delay
+        setTimeout(() => {
+            const reductionElement = $('#emissionReduction');
+            reductionElement.removeClass('text-red-600 text-green-600 text-yellow-600');
+            
+            if (emissionReduction > 10) {
+                reductionElement.addClass('text-green-600 dark:text-green-400');
+                // Add success pulse
+                reductionElement.parent().addClass('bg-green-50 dark:bg-green-900/20');
+            } else if (emissionReduction > 0) {
+                reductionElement.addClass('text-yellow-600 dark:text-yellow-400');
+                reductionElement.parent().addClass('bg-yellow-50 dark:bg-yellow-900/20');
+            } else {
+                reductionElement.addClass('text-red-600 dark:text-red-400');
+                reductionElement.parent().addClass('bg-red-50 dark:bg-red-900/20');
+            }
+        }, 1500);
+    }
+
+    // Animate number counting effect
+    function animateNumber(selector, start, end, suffix, duration) {
+        const element = $(selector);
+        const increment = (end - start) / (duration / 16);
+        let current = start;
         
-        if (emissionReduction > 10) {
-            reductionElement.addClass('text-green-600 dark:text-green-400');
-        } else if (emissionReduction > 0) {
-            reductionElement.addClass('text-yellow-600 dark:text-yellow-400');
-        } else {
-            reductionElement.addClass('text-red-600 dark:text-red-400');
-        }
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= end) {
+                current = end;
+                clearInterval(timer);
+            }
+            element.text(current.toFixed(end < 1 ? 1 : 2) + suffix);
+        }, 16);
     }
 
     // Generate baseline comparison table
@@ -283,12 +308,12 @@ $(document).ready(function() {
         
         if (detailedView.hasClass('hidden')) {
             detailedView.removeClass('hidden').hide().slideDown(600);
-            button.html('<i class="fas fa-eye-slash mr-2"></i>Hide Detailed Analysis');
+            button.html('<i class="fas fa-eye-slash mr-3"></i>Hide Detailed Analysis<i class="fas fa-chevron-up ml-3"></i>');
         } else {
             detailedView.slideUp(600, function() {
                 $(this).addClass('hidden');
             });
-            button.html('<i class="fas fa-table mr-2"></i>Show Detailed Analysis');
+            button.html('<i class="fas fa-microscope mr-3"></i>View Detailed Analysis<i class="fas fa-chevron-down ml-3"></i>');
         }
     });
 

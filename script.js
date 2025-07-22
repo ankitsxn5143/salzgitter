@@ -279,17 +279,9 @@ $(document).ready(function() {
         const selectedRoute = $(this).val();
         const baselineCO2 = routeBaselines[selectedRoute] || routeBaselines['narvik'];
         
-        console.log('DEBUG Route Change:');
-        console.log('- Selected route:', selectedRoute);
-        console.log('- routeBaselines object:', routeBaselines);
-        console.log('- Calculated baselineCO2:', baselineCO2);
-        console.log('- Card will show:', baselineCO2.toFixed(2));
-        
         // Update the baseline cards immediately
         $('#originalBaselineCard').text(baselineCO2.toFixed(2));
         $('#adjBaselineCard').text(baselineCO2.toFixed(2));
-        
-        console.log('Route changed to:', selectedRoute, 'Baseline:', baselineCO2.toFixed(2));
         
         // Update detailed table with new route data
         updateDetailedTable();
@@ -699,14 +691,9 @@ $(document).ready(function() {
 
     // Update results summary with visual bars and animations
     function updateResultsSummary(routeData, inputs, baselineCO2, actualCO2, emissionReduction) {
-        // Calculate original baseline (from baseline data without adjustments)
-        let originalBaseline = 0;
-        routeData.legs.forEach(leg => {
-            originalBaseline += (leg.lfoBase * emissionFactors.lfo + leg.mgoBase * emissionFactors.mgo + leg.hfoBase * emissionFactors.hfo);
-        });
-        originalBaseline = (originalBaseline * 1000) / inputs.cargoQuantity;
-
-        // Adjusted baseline is the calculated baseline CO2
+        // USE CORRECT BASELINE VALUES - Don't calculate from route data
+        const selectedRoute = $('input[name="route"]:checked').val() || 'narvik';
+        const originalBaseline = routeBaselines[selectedRoute] || routeBaselines['narvik'];
         const adjBaseline = baselineCO2;
 
         // Actual CO2 eq/1000 MT Cargo

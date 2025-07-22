@@ -87,13 +87,17 @@ $(document).ready(function() {
         const lfoConsumption = parseFloat($('#lfoConsumption').val());
         const hfoConsumption = parseFloat($('#hfoConsumption').val());
         const mgoConsumption = parseFloat($('#mgoConsumption').val());
+        const actualLoadingDays = parseFloat($('#actualLoadingDays').val());
+        const actualDischargingDays = parseFloat($('#actualDischargingDays').val());
 
         return !isNaN(cargoQuantity) && cargoQuantity > 0 &&
                !isNaN(seaMarginBallast) && seaMarginBallast >= 0 &&
                !isNaN(seaMarginLaden) && seaMarginLaden >= 0 &&
                !isNaN(lfoConsumption) && lfoConsumption >= 0 &&
                !isNaN(hfoConsumption) && hfoConsumption >= 0 &&
-               !isNaN(mgoConsumption) && mgoConsumption >= 0;
+               !isNaN(mgoConsumption) && mgoConsumption >= 0 &&
+               !isNaN(actualLoadingDays) && actualLoadingDays >= 0 &&
+               !isNaN(actualDischargingDays) && actualDischargingDays >= 0;
     }
 
     // Real-time calculation on input change
@@ -121,7 +125,9 @@ $(document).ready(function() {
             seaMarginLaden: parseFloat($('#seaMarginLaden').val()),
             lfoConsumption: parseFloat($('#lfoConsumption').val()),
             hfoConsumption: parseFloat($('#hfoConsumption').val()),
-            mgoConsumption: parseFloat($('#mgoConsumption').val())
+            mgoConsumption: parseFloat($('#mgoConsumption').val()),
+            actualLoadingDays: parseFloat($('#actualLoadingDays').val()),
+            actualDischargingDays: parseFloat($('#actualDischargingDays').val())
         };
 
         // Show loading state with enhanced visual feedback
@@ -143,6 +149,9 @@ $(document).ready(function() {
         // Generate detailed tables
         generateBaselineTable(routeData, inputs);
         generateDetailedTable(routeData, inputs, actualCO2);
+        
+        // Calculate and display results summary
+        updateResultsSummary(routeData, inputs, baselineCO2, actualCO2, emissionReduction);
 
         // Show results
         $('#summaryView').removeClass('hidden').hide().fadeIn(600);
@@ -278,6 +287,9 @@ $(document).ready(function() {
             const legCO2 = (legLFO * emissionFactors.lfo + legMGO * emissionFactors.mgo + legHFO * emissionFactors.hfo) / 1000;
             cumulativeCO2 += legCO2;
 
+            // Calculate actual CO2 WTW for this leg
+            const actualCO2WTW = legCO2 * 1.05; // Adding 5% for WTW factor
+
             const row = $(`
                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
                     <td class="border border-gray-300 dark:border-gray-600 p-2 font-medium">${leg.name}</td>
@@ -285,20 +297,58 @@ $(document).ready(function() {
                     <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">${leg.speed}</td>
                     <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">${leg.baseDays.toFixed(4)}</td>
                     <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">${adjMarginDays.toFixed(4)}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">${legLFO.toFixed(2)}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">${legMGO.toFixed(2)}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">${legHFO.toFixed(2)}</td>
                     <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">${leg.co2Exposure.toFixed(2)}</td>
-                    <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">${leg.co2WTW.toFixed(2)}</td>
+                    <td class="border border-gray-300 dark:border-gray-600 p-2 text-center">${actualCO2WTW.toFixed(2)}</td>
                     <td class="border border-gray-300 dark:border-gray-600 p-2 text-center font-medium">${legCO2.toFixed(2)}</td>
                 </tr>
             `);
             tbody.append(row);
         });
 
-        // Update total voyage CO2
-        const co2Per1000MT = (cumulativeCO2 * 1000000) / inputs.cargoQuantity;
-        $('#totalVoyageCO2').text(co2Per1000MT.toFixed(2));
+        // Store cumulative CO2 for results summary
+        window.cumulativeCO2 = cumulativeCO2;
+    }
+
+    // Update results summary table
+    function updateResultsSummary(routeData, inputs, baselineCO2, actualCO2, emissionReduction) {
+        // Calculate original baseline (from baseline data without adjustments)
+        let originalBaseline = 0;
+        routeData.legs.forEach(leg => {
+            originalBaseline += (leg.lfoBase * emissionFactors.lfo + leg.mgoBase * emissionFactors.mgo + leg.hfoBase * emissionFactors.hfo);
+        });
+        originalBaseline = (originalBaseline * 1000) / inputs.cargoQuantity;
+
+        // Adjusted baseline is the calculated baseline CO2
+        const adjBaseline = baselineCO2;
+
+        // Actual CO2 eq/1000 MT Cargo
+        const actualCO2Cargo = actualCO2;
+
+        // Contractual EUAs calculation (approximate)
+        const contractualEUAs = (actualCO2 * inputs.cargoQuantity) / 1000000; // Convert to tonnes CO2
+
+        // Total WTW CO2 in grams
+        const totalWTWCO2 = window.cumulativeCO2 ? (window.cumulativeCO2 * 1000 * 1.05) : 0; // Adding 5% for WTW
+
+        // Update the results summary table
+        $('#originalBaseline').text(originalBaseline.toFixed(2));
+        $('#adjBaseline').text(adjBaseline.toFixed(2));
+        $('#actualCO2Cargo').text(actualCO2Cargo.toFixed(2));
+        $('#emissionReductionTable').text(emissionReduction.toFixed(1) + '%');
+        $('#contractualEUAs').text(contractualEUAs.toFixed(0));
+        $('#totalWTWCO2').text(totalWTWCO2.toFixed(0));
+
+        // Color code the emission reduction
+        const reductionElement = $('#emissionReductionTable');
+        reductionElement.removeClass('text-red-600 text-green-600 text-yellow-600');
+        
+        if (emissionReduction > 10) {
+            reductionElement.addClass('text-green-600 dark:text-green-400');
+        } else if (emissionReduction > 0) {
+            reductionElement.addClass('text-yellow-600 dark:text-yellow-400');
+        } else {
+            reductionElement.addClass('text-red-600 dark:text-red-400');
+        }
     }
 
     // Show/hide detailed view

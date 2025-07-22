@@ -163,6 +163,24 @@
                         </label>
                         <input type="number" id="mgoConsumption" step="0.01" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter MGO consumption" value="14.36">
                     </div>
+
+                    <!-- Actual Loading Days -->
+                    <div class="group">
+                        <label class="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
+                            <i class="fas fa-upload mr-2 text-green-500"></i>
+                            Actual Loading Days
+                        </label>
+                        <input type="number" id="actualLoadingDays" step="0.1" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter loading days" value="3.69">
+                    </div>
+
+                    <!-- Actual Discharging Days -->
+                    <div class="group">
+                        <label class="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
+                            <i class="fas fa-download mr-2 text-red-500"></i>
+                            Actual Discharging Days
+                        </label>
+                        <input type="number" id="actualDischargingDays" step="0.1" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter discharging days" value="4.20">
+                    </div>
                 </div>
 
                 <div class="mt-8 text-center">
@@ -258,11 +276,8 @@
                                     <th class="border border-gray-300 dark:border-gray-600 p-2">Speed</th>
                                     <th class="border border-gray-300 dark:border-gray-600 p-2">Days</th>
                                     <th class="border border-gray-300 dark:border-gray-600 p-2">Adj. Margin Days</th>
-                                    <th class="border border-gray-300 dark:border-gray-600 p-2">LFO Cons</th>
-                                    <th class="border border-gray-300 dark:border-gray-600 p-2">MGO Cons</th>
-                                    <th class="border border-gray-300 dark:border-gray-600 p-2">HFO Cons</th>
                                     <th class="border border-gray-300 dark:border-gray-600 p-2">CO2 Exposure</th>
-                                    <th class="border border-gray-300 dark:border-gray-600 p-2">CO2 WTW</th>
+                                    <th class="border border-gray-300 dark:border-gray-600 p-2">Actual CO2 WTW</th>
                                     <th class="border border-gray-300 dark:border-gray-600 p-2">Total CO2</th>
                                 </tr>
                             </thead>
@@ -272,11 +287,38 @@
                     </div>
                 </div>
 
-                <!-- Summary Row -->
-                <div class="mt-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                    <div class="flex justify-between items-center font-semibold">
-                        <span>Total Voyage CO2 g/1000MT:</span>
-                        <span id="totalVoyageCO2" class="text-maritime-600 dark:text-maritime-400">--</span>
+                <!-- Results Summary Table -->
+                <div class="mt-8">
+                    <h3 class="text-lg font-semibold mb-4">Results Summary</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse border border-gray-300 dark:border-gray-600 text-sm">
+                            <tbody>
+                                <tr class="bg-gray-50 dark:bg-gray-700">
+                                    <td class="border border-gray-300 dark:border-gray-600 p-3 font-semibold">Original Baseline</td>
+                                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-right" id="originalBaseline">--</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-gray-300 dark:border-gray-600 p-3 font-semibold">Adj. Baseline</td>
+                                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-right" id="adjBaseline">--</td>
+                                </tr>
+                                <tr class="bg-gray-50 dark:bg-gray-700">
+                                    <td class="border border-gray-300 dark:border-gray-600 p-3 font-semibold">Actual CO2 eq/1000 MT Cargo</td>
+                                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-right" id="actualCO2Cargo">--</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-gray-300 dark:border-gray-600 p-3 font-semibold">Emission Reduction</td>
+                                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-right font-bold text-green-600 dark:text-green-400" id="emissionReductionTable">--</td>
+                                </tr>
+                                <tr class="bg-gray-50 dark:bg-gray-700">
+                                    <td class="border border-gray-300 dark:border-gray-600 p-3 font-semibold">Contractual EUAs</td>
+                                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-right" id="contractualEUAs">--</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-gray-300 dark:border-gray-600 p-3 font-semibold">Total WTW CO2 g</td>
+                                    <td class="border border-gray-300 dark:border-gray-600 p-3 text-right" id="totalWTWCO2">--</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

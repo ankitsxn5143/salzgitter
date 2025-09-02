@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maritime CO2 Emissions Calculator</title>
+    <title>Oldendorff - Salzgitter Emission Report</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -30,9 +33,26 @@
                 }
             }
         }
+         window.addEventListener('load', function () {
+    const options = {
+      enableTime: true,
+      time_24hr: true,
+      dateFormat: "Y-m-d H:i"
+    };
+
+    flatpickr("#norTenderedLoading", options);
+    flatpickr("#stopLoading", options);
+    flatpickr("#norTenderedDischarging", options);
+    flatpickr("#stopDischarging", options);
+  });
     </script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    
+    <script>
+  
+</script>
+
     <!-- Animated Background -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div class="absolute inset-0 bg-gradient-to-br from-maritime-500/10 via-transparent to-maritime-600/10"></div>
@@ -46,18 +66,20 @@
         <header class="header-enhanced shadow-lg sticky top-0 z-20">
             <div class="container mx-auto px-6 py-6">
                 <div class="flex justify-between items-center">
-                    <div class="flex items-center space-x-4">
-                        <div class="bg-gradient-to-br from-maritime-500 to-maritime-600 p-3 rounded-xl shadow-lg">
-                            <i class="fas fa-ship text-2xl text-white"></i>
-                        </div>
+                    <div class="flex justify-between items-center space-x-6 w-full">
+                        <!-- <div class="bg-gradient-to-br from-maritime-500 to-maritime-600 p-3 rounded-xl shadow-lg"> -->
+                            <!-- <i class="fas fa-ship text-2xl text-white"></i> -->
+                             <img src="https://www.oldendorff.com/dist/assets/oldendorff-logo-CYqGgZAb.svg" alt="Oldendorff Logo" class="w-40 h-12">
+                        <!-- </div> -->
                         <div>
                             <h1 class="text-3xl font-bold bg-gradient-to-r from-maritime-600 to-maritime-500 bg-clip-text text-transparent glow-text">
-                                Maritime CO2 Calculator
+                               Oldendorff - Salzgitter Emission Report
                             </h1>
                             <p class="text-sm text-gray-600 dark:text-gray-400 font-medium">Optimize Your Shipping Emissions</p>
                         </div>
+                        <img src="https://www.salzgitter-ag.com/typo3conf/ext/sitepackage/Resources/Public/Themes/SalzgitterAGRelaunch/Images/logo_en.svg" alt="SalzgitterAGRelaunch Logo" class="w-50 h-12">
                     </div>
-                    <button id="themeToggle" class="p-3 rounded-xl bg-white dark:bg-gray-700 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                    <button id="themeToggle" class="p-3 rounded-xl bg-white dark:bg-gray-700 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 -right-20">
                         <i class="fas fa-sun dark:hidden text-yellow-500 text-lg"></i>
                         <i class="fas fa-moon hidden dark:inline text-blue-400 text-lg"></i>
                     </button>
@@ -110,6 +132,27 @@
                 </h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                     <div class="group">
+                        <label class="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
+                            <i class="fas fa-weight-hanging mr-2 text-maritime-500"></i>
+                            Vessel Name
+                        </label>
+                        <input type="text" id="VesselName" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter Vessel Name" value="William Oldendorff">
+                    </div>
+                    <div class="group">
+                        <label class="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
+                            <i class="fas fa-weight-hanging mr-2 text-maritime-500"></i>
+                            Voyage Number
+                        </label>
+                        <input type="text" id="VoyageNo" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter Voyage Number" value="25045200">
+                    </div>
+                     <div class="group">
+                        <label class="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
+                            <!-- <i class="fas fa-weight-hanging mr-2 text-maritime-500"></i> -->
+                           
+                        </label>
+                        <!-- <input type="text" id="VoyageNo" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter Voyage Number" value="25045200"> -->
+                    </div>
                     <!-- Cargo Quantity -->
                     <div class="group">
                         <label class="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
@@ -125,7 +168,7 @@
                             <i class="fas fa-calendar-day mr-2 text-maritime-500"></i>
                             Sea Margin Days (Ballast)
                         </label>
-                        <input type="number" id="seaMarginBallast" step="0.1" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter ballast days" value="2.5">
+                        <input type="number" id="seaMarginBallast" step="0.1" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter ballast days" value="0.500">
                     </div>
 
                     <!-- Sea Margin Days - Laden -->
@@ -134,7 +177,7 @@
                             <i class="fas fa-calendar-check mr-2 text-maritime-500"></i>
                             Sea Margin Days (Laden)
                         </label>
-                        <input type="number" id="seaMarginLaden" step="0.1" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter laden days" value="3.2">
+                        <input type="number" id="seaMarginLaden" step="0.1" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter laden days" value="0.738">
                     </div>
 
                     <!-- LFO Consumption -->
@@ -163,23 +206,54 @@
                         </label>
                         <input type="number" id="mgoConsumption" step="0.01" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter MGO consumption" value="14.36">
                     </div>
+                    <div class="group">
+                        <label class="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
+                            <i class="fas fa-calendar-plus mr-2 text-green-500"></i>
+                            NOR Tendered (Loading) LT
+                        </label>
+                        <input type="text" id="norTenderedLoading" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500">
+                    </div>
 
+                    <!-- Stop Loading DateTime -->
+                    <div class="group">
+                        <label class="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
+                            <i class="fas fa-calendar-check mr-2 text-green-500"></i>
+                            Stop Loading LT
+                        </label>
+                        <input type="datetime-local" id="stopLoading" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500">
+                    </div>
                     <!-- Actual Loading Days -->
                     <div class="group">
                         <label class="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
                             <i class="fas fa-upload mr-2 text-green-500"></i>
                             Actual Loading Days
                         </label>
-                        <input type="number" id="actualLoadingDays" step="0.1" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter loading days" value="3.69">
+                        <input type="number" id="actualLoadingDays" step="0.1" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter loading days" value="3.5896">
+                    </div>
+                     <!-- NOR Tendered Discharging -->
+                    <div class="group">
+                        <label class="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
+                            <i class="fas fa-calendar-plus mr-2 text-red-500"></i>
+                            NOR Tendered (Discharging) LT
+                        </label>
+                        <input type="datetime-local" id="norTenderedDischarging" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500">
                     </div>
 
+                    <!-- Stop Discharging DateTime -->
+                    <div class="group">
+                        <label class="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
+                            <i class="fas fa-calendar-check mr-2 text-red-500"></i>
+                            Stop Discharging LT
+                        </label>
+                        <input type="datetime-local" id="stopDischarging" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500">
+                    </div>
                     <!-- Actual Discharging Days -->
                     <div class="group">
                         <label class="block text-sm font-semibold mb-3 text-gray-700 dark:text-gray-300">
                             <i class="fas fa-download mr-2 text-red-500"></i>
                             Actual Discharging Days
                         </label>
-                        <input type="number" id="actualDischargingDays" step="0.1" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter discharging days" value="4.20">
+                        <input type="number" id="actualDischargingDays" step="0.1" class="input-enhanced w-full p-4 border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-maritime-500 focus:border-maritime-500" placeholder="Enter discharging days" value="4.1361">
                     </div>
                 </div>
 
@@ -206,17 +280,17 @@
                     <div class="metric-card p-4 rounded-xl text-center">
                         <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wider">Original Baseline</div>
                         <div class="text-xl font-bold text-gray-700 dark:text-gray-300 animated-number" id="originalBaselineCard">--</div>
-                        <div class="text-xs text-gray-400 mt-1">g CO2/1000MT</div>
+                        <div class="text-xs text-gray-400 mt-1">MT CO2e/1000MT</div>
                     </div>
                     <div class="metric-card p-4 rounded-xl text-center">
                         <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wider">Adjusted Baseline</div>
                         <div class="text-xl font-bold text-blue-600 dark:text-blue-400 animated-number" id="adjBaselineCard">--</div>
-                        <div class="text-xs text-gray-400 mt-1">g CO2/1000MT</div>
+                        <div class="text-xs text-gray-400 mt-1">MT Co2e/1000MT</div>
                     </div>
                     <div class="metric-card p-4 rounded-xl text-center">
                         <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wider">Actual Performance</div>
                         <div class="text-xl font-bold text-green-600 dark:text-green-400 animated-number" id="actualCO2Card">--</div>
-                        <div class="text-xs text-gray-400 mt-1">g CO2/1000MT</div>
+                        <div class="text-xs text-gray-400 mt-1">MT Co2e/1000MT</div>
                     </div>
                     <div class="metric-card p-4 rounded-xl text-center">
                         <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wider">Emission Reduction</div>
@@ -233,7 +307,7 @@
                     <div class="mb-4">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-sm font-medium text-blue-600 dark:text-blue-400">Adjusted Baseline</span>
-                            <span class="text-sm font-bold text-blue-600 dark:text-blue-400" id="adjBaselineValue">-- g</span>
+                            <span class="text-sm font-bold text-blue-600 dark:text-blue-400" id="adjBaselineValue">-- MT Co2e/1000</span>
                         </div>
                         <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-3">
                             <div id="adjBaselineBar" class="bg-gradient-to-r from-blue-500 to-blue-600 h-3 rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
@@ -244,7 +318,7 @@
                     <div class="mb-4">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-sm font-medium text-green-600 dark:text-green-400">Actual Performance</span>
-                            <span class="text-sm font-bold text-green-600 dark:text-green-400" id="actualCO2Value">-- g</span>
+                            <span class="text-sm font-bold text-green-600 dark:text-green-400" id="actualCO2Value">-- MT Co2e/1000</span>
                         </div>
                         <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-3">
                             <div id="actualCO2Bar" class="bg-gradient-to-r from-green-500 to-green-600 h-3 rounded-full transition-all duration-1000 ease-out" style="width: 0%"></div>
@@ -268,7 +342,7 @@
                             <div class="font-bold" id="contractualEUAsCard">--</div>
                         </div>
                         <div class="text-center p-2 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                            <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Total WTW CO2 g</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Total WTW CO2 mt</div>
                             <div class="font-bold" id="totalWTWCO2Card">--</div>
                         </div>
                     </div>
@@ -282,6 +356,11 @@
                     View Detailed Analysis
                     <i class="fas fa-chevron-down ml-3"></i>
                 </button>
+                  <button id="exportPdfBtn" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-semibold text-base transition-colors flex items-center shadow-lg">
+                        <i class="fas fa-file-pdf mr-3"></i>
+                        Export to PDF
+                        <i class="fas fa-download ml-3"></i>
+                    </button>
             </div>
 
             <!-- Detailed Table View -->
@@ -293,7 +372,7 @@
                 
                 <!-- Baseline Table -->
                 <div class="mb-8">
-                    <div class="table-section-header">
+                    <!-- <div class="table-section-header">
                         <h3><i class="fas fa-balance-scale mr-2 text-maritime-600"></i> Baseline vs Actual Comparison</h3>
                     </div>
                     <div class="table-container enhanced-table">
@@ -312,7 +391,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Detailed Voyage Legs Table -->
                 <div>
@@ -323,16 +402,16 @@
                         <table class="w-full text-sm">
                             <thead>
                                 <tr>
-                                    <th class="text-left">Voyage Leg</th>
-                                    <th>Distance</th>
-                                    <th>Speed</th>
-                                    <th>Days</th>
-                                    <th>Adj. Margin Days</th>
-                                    <th>LFO Base</th>
+                                    <th class="text-center"><center>Voyage Leg</center></th>
+                                    <th class="text-center"<center>Distance</center></th>
+                                    <th><center>Speed</center></th>
+                                    <th><center>Days</center></th>
+                                    <th><center>Adj. Margin Days</center></th>
+                                    <!-- <th>LFO Base</th>
                                     <th>MGO Base</th>
                                     <th>HFO Base</th>
-                                    <th>CO2 Exposure</th>
-                                    <th>Actual CO2 WTW</th>
+                                    <th>CO2 Exposure</th> -->
+                                    <!-- <th>Actual CO2 WTW</th> -->
                                 </tr>
                             </thead>
                             <tbody id="detailedTableBody">
@@ -346,6 +425,9 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
     <script src="script.js"></script>
+    <script src="pdf-export.js"></script>
 </body>
 </html>

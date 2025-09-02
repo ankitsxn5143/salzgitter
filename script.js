@@ -9,7 +9,15 @@ $(document).ready(function() {
             baseline: {
                 "Ballast": { speed: 13.0, cons: 43.0 },
                 "Laden": { speed: 12.0, cons: 43.0 },
-                "Loading/Discharging": { speed: 0, cons: 4.0 }
+                "Loading/Discharging": { speed: 0, cons: 4.0 },
+                "baseline_margin_ballast":0.4875,
+                "baseline_margin_laden":0.5641,
+                "baseline_loading_days": 2.8,
+                "baseline_discharging_days": 3.8,
+                "baseline_ballast_days" : 3.7375,
+                "baseline_laden_days" : 4.3245,
+                "basline_ballast_wo_margin_days" : 3.25,
+                "basline_laden_wo_margin_days" : 3.76,
             },
             legs: [
                 { 
@@ -24,6 +32,8 @@ $(document).ready(function() {
                     co2Exposure: 434.03, 
                     co2WTW: 434.03, 
                     totalCO2: 434.03,
+                    per_day_cons : 43.0,
+                    co2_wtw_factor : 3.876,
                     type: 'ballast-eca',
                     description: 'Ballast voyage in ECA zone before loading'
                 },
@@ -39,6 +49,8 @@ $(document).ready(function() {
                     co2Exposure: 257.00, 
                     co2WTW: 257.00, 
                     totalCO2: 257.00,
+                    per_day_cons : 43.0,
+                    co2_wtw_factor : 3.747,
                     type: 'ballast-non-eca',
                     description: 'Ballast voyage outside ECA zones'
                 },
@@ -54,6 +66,8 @@ $(document).ready(function() {
                     co2Exposure: 43.47, 
                     co2WTW: 43.78, 
                     totalCO2: 43.47,
+                    per_day_cons : 4.0,
+                    co2_wtw_factor : 3.876,
                     type: 'port-loading',
                     description: 'Loading operations at Narvik'
                 },
@@ -69,6 +83,8 @@ $(document).ready(function() {
                     co2Exposure: 390.08, 
                     co2WTW: 390.08, 
                     totalCO2: 390.08,
+                    per_day_cons : 43.0,
+                    co2_wtw_factor : 3.876,
                     type: 'laden-eca',
                     description: 'Laden voyage in ECA zone'
                 },
@@ -84,6 +100,8 @@ $(document).ready(function() {
                     co2Exposure: 319.65, 
                     co2WTW: 319.65, 
                     totalCO2: 319.65,
+                    per_day_cons : 43.0,
+                    co2_wtw_factor : 3.747,
                     type: 'laden-non-eca',
                     description: 'Laden voyage outside ECA zones'
                 },
@@ -99,6 +117,8 @@ $(document).ready(function() {
                     co2Exposure: 58.98, 
                     co2WTW: 59.39, 
                     totalCO2: 58.98,
+                    per_day_cons : 4.0,
+                    co2_wtw_factor : 3.876,
                     type: 'port-discharging',
                     description: 'Discharging operations at Hamburg'
                 },
@@ -115,6 +135,8 @@ $(document).ready(function() {
                     co2WTW: 57.92, 
                     totalCO2: 57.92,
                     type: 'ballast-eca',
+                    per_day_cons : 43.0,
+                    co2_wtw_factor : 3.876,
                     description: 'Ballast voyage in ECA zone after discharge'
                 }
             ]
@@ -125,7 +147,15 @@ $(document).ready(function() {
             baseline: {
                 "Ballast": { speed: 14.0, cons: 41.0 },
                 "Laden": { speed: 13.0, cons: 41.0 },
-                "Loading/Discharging": { speed: 0, cons: 3.5 }
+                "Loading/Discharging": { speed: 0, cons: 3.5 },
+                "baseline_margin_ballast":1.4880,
+                "baseline_margin_laden":1.6562,
+                "baseline_loading_days": 2.3,
+                "baseline_discharging_days": 3.8,
+                "baseline_ballast_days" : 11.4079,
+                "baseline_laden_days" : 12.7011,
+                "basline_ballast_wo_margin_days" : 9.92,
+                "basline_laden_wo_margin_days" : 11.042,
             },
             legs: [
                 { 
@@ -140,6 +170,8 @@ $(document).ready(function() {
                     co2Exposure: 1055.08, 
                     co2WTW: 1055.08, 
                     totalCO2: 1055.08,
+                     per_day_cons : 43.0,
+                    co2_wtw_factor : 3.876,
                     type: 'ballast-eca',
                     description: 'Ballast voyage in ECA zone before loading'
                 },
@@ -155,6 +187,8 @@ $(document).ready(function() {
                     co2Exposure: 1046.21, 
                     co2WTW: 1046.21, 
                     totalCO2: 1046.21,
+                     per_day_cons : 43.0,
+                    co2_wtw_factor : 3.747,
                     type: 'ballast-non-eca',
                     description: 'Ballast voyage outside ECA zones'
                 },
@@ -170,6 +204,8 @@ $(document).ready(function() {
                     co2Exposure: 35.71, 
                     co2WTW: 35.96, 
                     totalCO2: 35.71,
+                    per_day_cons : 4.0,
+                    co2_wtw_factor : 3.876,
                     type: 'port-loading',
                     description: 'Loading operations at Seven Island'
                 },
@@ -185,6 +221,8 @@ $(document).ready(function() {
                     co2Exposure: 1070.86, 
                     co2WTW: 1070.86, 
                     totalCO2: 1070.86,
+                    per_day_cons : 43.0,
+                    co2_wtw_factor : 3.876,
                     type: 'laden-eca',
                     description: 'Laden voyage in ECA zone'
                 },
@@ -200,6 +238,8 @@ $(document).ready(function() {
                     co2Exposure: 1010.23, 
                     co2WTW: 1010.23, 
                     totalCO2: 1010.23,
+                    per_day_cons : 43.0,
+                    co2_wtw_factor : 3.747,
                     type: 'laden-non-eca',
                     description: 'Laden voyage outside ECA zones'
                 },
@@ -215,6 +255,8 @@ $(document).ready(function() {
                     co2Exposure: 58.98, 
                     co2WTW: 59.39, 
                     totalCO2: 58.98,
+                     per_day_cons : 4.0,
+                    co2_wtw_factor : 3.876,
                     type: 'port-discharging',
                     description: 'Discharging operations at Hamburg'
                 },
@@ -230,6 +272,8 @@ $(document).ready(function() {
                     co2Exposure: 57.92, 
                     co2WTW: 57.92, 
                     totalCO2: 57.92,
+                    per_day_cons : 43.0,
+                    co2_wtw_factor : 3.876,
                     type: 'ballast-eca',
                     description: 'Ballast voyage in ECA zone after discharge'
                 }
@@ -281,7 +325,7 @@ $(document).ready(function() {
         
         // Update the baseline cards immediately
         $('#originalBaselineCard').text(baselineCO2.toFixed(2));
-        $('#adjBaselineCard').text(baselineCO2.toFixed(2));
+        // $('#adjBaselineCard').text(baselineCO2.toFixed(2));
         
         // Update detailed table with new route data
         updateDetailedTable();
@@ -293,10 +337,78 @@ $(document).ready(function() {
             // If not calculating, at least update the cards one more time after table update
             setTimeout(() => {
                 $('#originalBaselineCard').text(baselineCO2.toFixed(2));
-                $('#adjBaselineCard').text(baselineCO2.toFixed(2));
+                // $('#adjBaselineCard').text(baselineCO2.toFixed(2));
             }, 100);
         }
     });
+    $("#norTenderedLoading").on("change",function(){
+        calculateLoadingDays();
+    })
+    $("#stopLoading").on("change",function(){
+        calculateLoadingDays();
+    })
+    $("#norTenderedDischarging").on("change",function(){
+        calculateDischargingDays();
+    })
+    $("#stopDischarging").on("change",function(){
+        calculateDischargingDays();
+    })
+    function calculateLoadingDays() {
+        console.log('calculateLoadingDays called');
+        const norTendered = $('#norTenderedLoading').val();
+        const stopLoading = $('#stopLoading').val();
+        
+        console.log('Loading values:', { norTendered, stopLoading });
+        
+        if (norTendered && stopLoading) {
+            const norDate = new Date(norTendered);
+            const stopDate = new Date(stopLoading);
+            
+            console.log('Dates parsed:', { norDate, stopDate });
+            
+            if (stopDate >= norDate) {
+                const diffTime = Math.abs(stopDate - norDate);
+                const diffDays = diffTime / (1000 * 60 * 60 * 24); // Convert milliseconds to days
+                $('#actualLoadingDays').val(diffDays.toFixed(2));
+                console.log(`Loading Days Calculated: ${diffDays.toFixed(2)} days`);
+            } else {
+                alert("Stop loading time must be after NOR tendered time");
+                $('#actualLoadingDays').val('');
+                console.log('Stop loading time must be after NOR tendered time');
+            }
+        } else {
+            console.log('Missing datetime values for loading calculation');
+        }
+    }
+
+    // Auto-calculate discharging days from datetime inputs
+    function calculateDischargingDays() {
+        console.log('calculateDischargingDays called');
+        const norTendered = $('#norTenderedDischarging').val();
+        const stopDischarging = $('#stopDischarging').val();
+        
+        console.log('Discharging values:', { norTendered, stopDischarging });
+        
+        if (norTendered && stopDischarging) {
+            const norDate = new Date(norTendered);
+            const stopDate = new Date(stopDischarging);
+            
+            console.log('Dates parsed:', { norDate, stopDate });
+            
+            if (stopDate >= norDate) {
+                const diffTime = Math.abs(stopDate - norDate);
+                const diffDays = diffTime / (1000 * 60 * 60 * 24); // Convert milliseconds to days
+                $('#actualDischargingDays').val(diffDays.toFixed(2));
+                console.log(`Discharging Days Calculated: ${diffDays.toFixed(2)} days`);
+            } else {
+                alert("Stop discharging time must be after NOR tendered time");
+                $('#actualDischargingDays').val('');
+                console.log('Stop discharging time must be after NOR tendered time');
+            }
+        } else {
+            console.log('Missing datetime values for discharging calculation');
+        }
+    }
 
     // Function to dynamically populate detailed table based on route selection
     function updateDetailedTable() {
@@ -306,27 +418,79 @@ $(document).ready(function() {
         const routeData = baselineData[selectedRoute];
         const tbody = $('#detailedTableBody');
         tbody.empty();
-        
+        let sea_margin_ballast_days = $("#seaMarginBallast").val()
+        let sea_margin_laden_days = $("#seaMarginLaden").val()
+        let actual_loading_days = $("#actualLoadingDays").val()
+        let actual_discharging_days = $("#actualDischargingDays").val()
+
+        if(sea_margin_ballast_days){
+            sea_margin_ballast_days = parseFloat(sea_margin_ballast_days);
+        }
+        else{
+            sea_margin_ballast_days = 0;
+        }
+        if(sea_margin_laden_days){
+            sea_margin_laden_days = parseFloat(sea_margin_laden_days);
+        }
+        else{
+            sea_margin_laden_days = 0;
+        }
+        let ballast_margin_adj = null;
+        if(sea_margin_ballast_days>routeData.baseline.baseline_margin_ballast){
+            ballast_margin_adj = sea_margin_ballast_days-routeData.baseline.baseline_margin_ballast;
+            ballast_days = routeData.baseline.baseline_ballast_days;
+        }
+        // else{
+        //     ballast_margin_adj = routeData.baseline.baseline_margin_ballast;
+        // }
+        let laden_margin_adj = null;
+        if(sea_margin_laden_days>routeData.baseline.baseline_margin_laden){
+            laden_margin_adj = sea_margin_laden_days-routeData.baseline.baseline_margin_laden
+            laden_days = routeData.baseline.baseline_laden_days;
+        }
+        // else{
+        //     laden_margin_adj = routeData.baseline.baseline_margin_laden;
+        // }
+        let total_co2 = 0.0
+        console.log("------------------")
         routeData.legs.forEach((leg, index) => {
-            // Determine voyage type class and icon
-            let voyageTypeClass = '';
-            let voyageIcon = '';
-            if (leg.type && leg.type.includes('ballast')) {
-                voyageTypeClass = 'voyage-leg-ballast';
-                voyageIcon = '⚓';
-            } else if (leg.type && leg.type.includes('laden')) {
-                voyageTypeClass = 'voyage-leg-laden';
-                voyageIcon = '📦';
-            } else if (leg.type && leg.type.includes('port')) {
-                voyageTypeClass = 'voyage-leg-port';
-                voyageIcon = '🏭';
+            if (leg.distance!=0){
+                leg.baseDays = leg.distance / leg.speed / 24.0 * 1.15
+                
             }
+            
+            leg.adjMarginDays=leg.baseDays;
+            if (leg.name!="Post-Ballast ECA"){
+                if (leg.type && leg.type.includes('ballast') && ballast_margin_adj!=null) {
+                    console.log(leg.baseDays,ballast_days,ballast_margin_adj)
+                    leg.adjMarginDays = leg.baseDays+(leg.baseDays/ballast_days* ballast_margin_adj);
+                }
+                if(leg.type && leg.type.includes('laden') && laden_margin_adj!=null){
+                    
+                    leg.adjMarginDays = leg.baseDays+(leg.baseDays/laden_days* laden_margin_adj);
+                }
+            }
+            if(leg.type=="port-loading"){
+                leg.adjMarginDays = parseFloat(actual_loading_days);
+                if(leg.adjMarginDays<leg.baseDays){
+                    leg.adjMarginDays = leg.baseDays;
+                }
+                
+            }
+            if(leg.type=="port-discharging"){
+                leg.adjMarginDays = parseFloat(actual_discharging_days);
+                if(leg.adjMarginDays<leg.baseDays){
+                    leg.adjMarginDays = leg.baseDays;
+                }
+            }
+            leg.baseDays =  Math.round( leg.baseDays * 10000) / 10000;
+            //first round of all of them to 4 decimal palace then conduct the calculation
+            leg.adjMarginDays = Math.round(leg.adjMarginDays * 10000) / 10000;
+            
 
-            // Add fuel type styling for consumption columns
-            const lfoClass = leg.lfoBase > 0 ? 'fuel-type-lfo' : '';
-            const mgoClass = leg.mgoBase > 0 ? 'fuel-type-mgo' : '';
-            const hfoClass = leg.hfoBase > 0 ? 'fuel-type-hfo' : '';
 
+            total_co2+=leg.adjMarginDays*leg.per_day_cons*leg.co2_wtw_factor;
+            console.log(leg.name,leg.adjMarginDays,leg.per_day_cons,leg.co2_wtw_factor,leg.adjMarginDays*leg.per_day_cons*leg.co2_wtw_factor)
             const row = $(`
                 <tr class="table-cell-animate" style="animation-delay: ${index * 0.05}s">
                     <td class="table-leg-name">${leg.name}</td>
@@ -334,16 +498,14 @@ $(document).ready(function() {
                     <td class="table-numeric">${leg.speed}</td>
                     <td class="table-numeric">${leg.baseDays}</td>
                     <td class="table-numeric">${leg.adjMarginDays}</td>
-                    <td class="table-numeric ${lfoClass}">${leg.lfoBase}</td>
-                    <td class="table-numeric ${mgoClass}">${leg.mgoBase}</td>
-                    <td class="table-numeric ${hfoClass}">${leg.hfoBase}</td>
-                    <td class="table-co2-exposure table-numeric">${leg.co2Exposure.toFixed(2)}</td>
-                    <td class="table-actual-co2 table-numeric" id="actualCO2_${index}">--</td>
+                    
                 </tr>
             `);
             
             tbody.append(row);
         });
+        $("#adjBaselineCard").text((total_co2/133000*1000).toFixed(2));
+
     }
 
     // Initialize table on page load  
@@ -375,7 +537,8 @@ $(document).ready(function() {
         if (validateInputs()) {
             // Add small delay to avoid excessive calculations
             clearTimeout(window.calcTimeout);
-            window.calcTimeout = setTimeout(calculateEmissions, 500);
+            // window.calcTimeout = setTimeout(calculateEmissions, 500);
+            $("#calculateBtn").trigger("click");
         }
     });
 
@@ -408,21 +571,21 @@ $(document).ready(function() {
         const baselineCO2 = calculateBaselineCO2(routeData, inputs);
         
         // Calculate actual CO2 based on inputs
-        const actualCO2 = calculateActualCO2(routeData, inputs);
+        // const actualCO2 = calculateActualCO2(routeData, inputs);
         
         // Calculate percentage reduction
-        const emissionReduction = ((baselineCO2 - actualCO2) / baselineCO2 * 100);
-
+        // const emissionReduction = ((baselineCO2 - actualCO2) / baselineCO2 * 100);
+        updateDetailedTable()
         // Update summary view
-        updateSummaryView(baselineCO2, actualCO2, emissionReduction);
+        // updateSummaryView(baselineCO2, actualCO2, emissionReduction);
         
         // Generate detailed tables
-        generateBaselineTable(routeData, inputs);
-        generateDetailedTable(routeData, inputs, actualCO2);
+        // generateBaselineTable(routeData, inputs);
+        // generateDetailedTable(routeData, inputs, actualCO2);
         
         // Calculate and display results summary
-        updateResultsSummary(routeData, inputs, baselineCO2, actualCO2, emissionReduction);
-
+        // updateResultsSummary(routeData, inputs, baselineCO2, actualCO2, emissionReduction);
+        
         // Show results
         $('#summaryView').removeClass('hidden').hide().fadeIn(600);
         $('#detailsToggle').removeClass('hidden').hide().fadeIn(600);
@@ -708,7 +871,7 @@ $(document).ready(function() {
         // Animate the metric cards
         setTimeout(() => {
             animateNumber('#originalBaselineCard', 0, originalBaseline, '', 800);
-            animateNumber('#adjBaselineCard', 0, adjBaseline, '', 1000);
+            // animateNumber('#adjBaselineCard', 0, adjBaseline, '', 1000);
             animateNumber('#actualCO2Card', 0, actualCO2Cargo, '', 1200);
             animateNumber('#emissionReductionCard', 0, emissionReduction, '%', 1400);
         }, 300);
@@ -745,23 +908,23 @@ $(document).ready(function() {
         
         if (emissionReduction > 20) {
             reductionElement.addClass('text-green-600 dark:text-green-400');
-            message = 'Excellent Performance! 🌟';
+            message = '';
             barColor = 'from-green-500 to-green-600';
         } else if (emissionReduction > 10) {
             reductionElement.addClass('text-green-600 dark:text-green-400');
-            message = 'Great Reduction Achieved';
+            message = '';
             barColor = 'from-green-500 to-green-600';
         } else if (emissionReduction > 0) {
             reductionElement.addClass('text-yellow-600 dark:text-yellow-400');
-            message = 'Moderate Improvement';
+            message = '';
             barColor = 'from-yellow-500 to-yellow-600';
         } else if (emissionReduction > -10) {
             reductionElement.addClass('text-orange-600 dark:text-orange-400');
-            message = 'Slight Increase';
+            message = '';
             barColor = 'from-orange-500 to-orange-600';
         } else {
             reductionElement.addClass('text-red-600 dark:text-red-400');
-            message = 'Needs Optimization';
+            message = '';
             barColor = 'from-red-500 to-red-600';
         }
 
@@ -793,6 +956,7 @@ $(document).ready(function() {
     // Direct fuel calculation function using existing inputs
     function calculateDirectFuelEmissions() {
         // Get fuel consumption values from existing inputs
+        updateDetailedTable()
         const lfoConsumption = parseFloat($('#lfoConsumption').val()) || 0;
         const mgoConsumption = parseFloat($('#mgoConsumption').val()) || 0;
         const hfoConsumption = parseFloat($('#hfoConsumption').val()) || 0;
@@ -802,6 +966,7 @@ $(document).ready(function() {
         const totalCO2 = (lfoConsumption * emissionFactors.lfo) + 
                         (mgoConsumption * emissionFactors.mgo) + 
                         (hfoConsumption * emissionFactors.hfo);
+        console.log(`Total CO2 emissions: ${totalCO2.toFixed(2)} tonnes`);
         
         // Convert to gCO2 per 1000MT cargo: (Total CO2 / cargo quantity) * 1000
         const actualCO2per1000MT = (totalCO2 / cargoQuantity) * 1000;
@@ -809,9 +974,9 @@ $(document).ready(function() {
         // Get selected route baseline from radio buttons
         const selectedRoute = $('input[name="route"]:checked').val() || 'narvik';
         const baselineCO2 = routeBaselines[selectedRoute] || routeBaselines['narvik'];
-        
+        const baselineCO2per1000MT = parseFloat($("#adjBaselineCard").text());
         // Calculate emission reduction percentage
-        const emissionReduction = ((baselineCO2 - actualCO2per1000MT) / baselineCO2) * 100;
+        const emissionReduction = ((baselineCO2per1000MT - actualCO2per1000MT) / baselineCO2per1000MT) * 100;
         
         // Show results summary
         $('#summaryView').removeClass('hidden');
@@ -820,19 +985,19 @@ $(document).ready(function() {
         // Update result cards with animation - use correct baseline values
         setTimeout(() => {
             animateNumber('#originalBaselineCard', 0, baselineCO2, '', 800);
-            animateNumber('#adjBaselineCard', 0, baselineCO2, '', 1000);
+            // animateNumber('#adjBaselineCard', 0, baselineCO2, '', 1000);
             animateNumber('#actualCO2Card', 0, actualCO2per1000MT, '', 1200);
             animateNumber('#emissionReductionCard', 0, emissionReduction, '%', 1400);
         }, 300);
         
         // Update additional metrics with placeholder values
         setTimeout(() => {
-            $('#contractualEUAsCard').text(Math.round((totalCO2 * 0.001)));
-            $('#totalWTWCO2Card').text(Math.round(totalCO2 * 1000));
+            $('#contractualEUAsCard').text(Math.round((7.4/1000 * cargoQuantity)));
+            $('#totalWTWCO2Card').text(Math.round(totalCO2));
         }, 800);
 
         // Update bar chart values
-        $('#adjBaselineValue').text(baselineCO2.toFixed(2) + ' g');
+        $('#adjBaselineValue').text(baselineCO2per1000MT.toFixed(2) + ' g');
         $('#actualCO2Value').text(actualCO2per1000MT.toFixed(2) + ' g');
         $('#reductionPercentage').text(emissionReduction.toFixed(1) + '%');
 
@@ -886,17 +1051,17 @@ $(document).ready(function() {
         }, 1200);
         
         // Console log for verification
-        console.log('=== DIRECT FUEL CALCULATION ===');
-        console.log(`Selected Route: ${selectedRoute}`);
-        console.log(`Available Routes:`, Object.keys(routeBaselines));
-        console.log(`LFO: ${lfoConsumption} tonnes × ${emissionFactors.lfo} = ${(lfoConsumption * emissionFactors.lfo).toFixed(2)} tonnes CO2`);
-        console.log(`MGO: ${mgoConsumption} tonnes × ${emissionFactors.mgo} = ${(mgoConsumption * emissionFactors.mgo).toFixed(2)} tonnes CO2`);
-        console.log(`HFO: ${hfoConsumption} tonnes × ${emissionFactors.hfo} = ${(hfoConsumption * emissionFactors.hfo).toFixed(2)} tonnes CO2`);
-        console.log(`Total CO2: ${totalCO2.toFixed(2)} tonnes`);
-        console.log(`Cargo: ${cargoQuantity} tonnes`);
-        console.log(`Actual CO2/1000MT: ${actualCO2per1000MT.toFixed(2)} gCO2/1000MT`);
-        console.log(`Baseline: ${baselineCO2.toFixed(2)} gCO2/1000MT`);
-        console.log(`Reduction: ${emissionReduction.toFixed(2)}%`);
+        // console.log('=== DIRECT FUEL CALCULATION ===');
+        // console.log(`Selected Route: ${selectedRoute}`);
+        // console.log(`Available Routes:`, Object.keys(routeBaselines));
+        // console.log(`LFO: ${lfoConsumption} tonnes × ${emissionFactors.lfo} = ${(lfoConsumption * emissionFactors.lfo).toFixed(2)} tonnes CO2`);
+        // console.log(`MGO: ${mgoConsumption} tonnes × ${emissionFactors.mgo} = ${(mgoConsumption * emissionFactors.mgo).toFixed(2)} tonnes CO2`);
+        // console.log(`HFO: ${hfoConsumption} tonnes × ${emissionFactors.hfo} = ${(hfoConsumption * emissionFactors.hfo).toFixed(2)} tonnes CO2`);
+        // console.log(`Total CO2: ${totalCO2.toFixed(2)} tonnes`);
+        // console.log(`Cargo: ${cargoQuantity} tonnes`);
+        // console.log(`Actual CO2/1000MT: ${actualCO2per1000MT.toFixed(2)} gCO2/1000MT`);
+        // console.log(`Baseline: ${baselineCO2.toFixed(2)} gCO2/1000MT`);
+        // console.log(`Reduction: ${emissionReduction.toFixed(2)}%`);
         
         return actualCO2per1000MT;
     }
@@ -908,7 +1073,7 @@ $(document).ready(function() {
     const defaultRoute = $('input[name="route"]:checked').val() || 'narvik';
     const defaultBaseline = routeBaselines[defaultRoute] || routeBaselines['narvik'];
     $('#originalBaselineCard').text(defaultBaseline.toFixed(2));
-    $('#adjBaselineCard').text(defaultBaseline.toFixed(2));
+    // $('#adjBaselineCard').text(defaultBaseline.toFixed(2));
     
     // Initialize with sample calculation if default values are present
     if (validateInputs()) {

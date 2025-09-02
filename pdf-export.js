@@ -33,11 +33,11 @@ function exportVoyageAnalysisToPDF() {
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(24);
     doc.setFont('helvetica', 'bold');
-    doc.text('Oldendorff - Salzgitter Emission Report', 65, 20);
+    doc.text('Oldendorff - Salzgitter Emissions Report', 65, 20);
     
     doc.setFontSize(12);
     doc.setFont('helvetica', 'normal');
-    doc.text('Optimize Your Shipping Emissions', 65, 28);
+    // doc.text('Optimize Your Shipping Emissions', 65, 28);
     
     // Reset text color for body
     doc.setTextColor(0, 0, 0);
@@ -353,7 +353,7 @@ doc.text(` : ${stopDischarging} )`,
     
     // Enhanced filename
     const timestamp = now.toISOString().slice(0, 10);
-    const filename = `Maritime_CO2_Analysis_${routeName.replace(/\s+/g, '_')}_${timestamp}.pdf`;
+    const filename = `Oldendorff-Salzgitter-Emissions-report-${voyageNumber}.pdf`;
     doc.save(filename);
     
     console.log('Professional PDF exported successfully:', filename);

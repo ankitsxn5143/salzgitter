@@ -1220,7 +1220,7 @@ $(document).ready(function() {
         
         // Update additional metrics with placeholder values
         setTimeout(() => {
-            $('#contractualEUAsCard').text(Math.round((7.4/1000 * cargoQuantity)));
+            $('#contractualEUAsCard').text(Math.round((factor/1000 * cargoQuantity)));
             $('#totalWTWCO2Card').text(Math.round(totalCO2));
         }, 800);
 

@@ -72,7 +72,11 @@
                              <img src="https://www.oldendorff.com/dist/assets/oldendorff-logo-CYqGgZAb.svg" alt="Oldendorff Logo" class="w-40 h-12">
                         <!-- </div> -->
                         <div>
+<<<<<<< HEAD
                             <h1 class="text-3xl font-bold bg-gradient-to-r from-maritime-600 to-maritime-500 bg-clip-text text-transparent glow-text">
+=======
+                            <h1 class="text-3xl font-bold bg-gradient-to-r from-maritime-600 to-maritime-500 bg-clip-text text-transparent">
+>>>>>>> ec04703 (sourabh changes)
                                Oldendorff - Salzgitter Emissions Report
                             </h1>
                             
@@ -115,7 +119,11 @@
                                 <i class="fas fa-anchor text-maritime-600 text-xl"></i>
                             </div>
                             <div>
+<<<<<<< HEAD
                                 <div class="font-bold text-lg">Seven Island Routes</div>
+=======
+                                <div class="font-bold text-lg">Seven Islands Routes</div>
+>>>>>>> ec04703 (sourabh changes)
                                 <div class="text-sm opacity-75">Elbe 1 – Seven Islands – Hamburg – Elbe 1</div>
                                 <div class="text-xs text-maritime-600 dark:text-maritime-400 mt-1"></div>
                             </div>
@@ -262,7 +270,7 @@
                 <div class="mt-8 text-center">
                     <button id="calculateBtn" class="btn-gradient text-white px-8 py-4 rounded-xl font-bold text-lg transition-colors flex items-center mx-auto shadow-lg">
                         <i class="fas fa-calculator mr-3 text-xl"></i>
-                        Calculate CO2 Emissions
+                        Calculate CO2e Emissions
                         <i class="fas fa-arrow-right ml-3 text-lg opacity-75"></i>
                     </button>
                 </div>
@@ -272,7 +280,7 @@
             <div id="summaryView" class="card-enhanced rounded-xl shadow-lg p-8 mb-8 hidden">
                 <h2 class="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-maritime-600 to-maritime-500 bg-clip-text text-transparent">
                     <i class="fas fa-chart-bar mr-3 text-maritime-600"></i>
-                    CO2 Emissions Results
+                    CO2e Emissions Results
                 </h2>
                 
                 <!-- Key Metrics Cards -->
@@ -301,7 +309,7 @@
 
                 <!-- Comparison Bar Chart -->
                 <div class="bar-chart-container p-6 rounded-xl mb-6">
-                    <h3 class="text-lg font-semibold mb-4 text-center">CO2 Emissions Comparison</h3>
+                    <h3 class="text-lg font-semibold mb-4 text-center">CO2e Emissions Comparison</h3>
                     
                     <!-- Adjusted Baseline Bar -->
                     <div class="mb-4">
@@ -342,7 +350,7 @@
                             <div class="font-bold" id="contractualEUAsCard">--</div>
                         </div>
                         <div class="text-center p-2 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                            <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Total WTW CO2 mt</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Total WTW CO2e mt</div>
                             <div class="font-bold" id="totalWTWCO2Card">--</div>
                         </div>
                     </div>
@@ -399,19 +407,22 @@
                         <h3><i class="fas fa-route mr-2 text-maritime-600"></i> Voyage Legs Analysis</h3>
                     </div>
                     <div class="table-container enhanced-table">
-                        <table class="w-full text-sm">
+                        <table id="voyageLegTable" class="w-full text-sm">
                             <thead>
                                 <tr>
-                                    <th class="text-center"><center>Voyage Leg</center></th>
-                                    <th class="text-center"<center>Distance</center></th>
-                                    <th><center>Speed</center></th>
-                                    <th><center>Days</center></th>
-                                    <th><center>Adj. Margin Days</center></th>
-                                    <!-- <th>LFO Base</th>
-                                    <th>MGO Base</th>
-                                    <th>HFO Base</th>
-                                    <th>CO2 Exposure</th> -->
-                                    <!-- <th>Actual CO2 WTW</th> -->
+                                    <th class="text-center min-w-[180px]"><center>Segment</center></th>
+                                    <th class="text-center"><center>From</center></th>
+                                    <th class="text-center"><center>To</center></th>
+                                    <th class="text-center"><center>Contractual Distance (NM)</center></th>
+                                    <th class="text-center"><center>Contractual Speed (Kts)</center></th>
+                                    <th class="text-center"><center>Days</center></th>
+                                    <th class="text-center"><center>Adj. Margin Days</center></th>
+                                    <th class="text-center"><center>SM %</center></th>
+                                    <th>HFO (MT)</th>
+                                    <th>LFO (MT)</th>
+                                    <th>MGO (MT)</th>
+                                    <!-- <th>CO2 Exposure</th> -->
+                                    <th>CO2e Emissions (MT) WTW</th>
                                 </tr>
                             </thead>
                             <tbody id="detailedTableBody">
@@ -426,7 +437,7 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
     <script src="script.js"></script>
     <script src="pdf-export.js"></script>
 </body>

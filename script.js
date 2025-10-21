@@ -21,7 +21,7 @@ $(document).ready(function() {
             },
             legs: [
                 { 
-                    name: "Pre-Ballast ECA", 
+                    name: "ECA", 
                     distance: 629, 
                     speed: 13, 
                     baseDays: 2.264, 
@@ -35,12 +35,15 @@ $(document).ready(function() {
                     per_day_cons : 43.0,
                     co2_wtw_factor : 3.876,
                     type: 'ballast-eca',
-                    description: 'Ballast voyage in ECA zone before loading'
+                    description: 'Ballast voyage in ECA zone before loading',
+                    segment: 'pre_ballast',
+                    from: "Elbe1",
+                    to: "ECA-NonECA boundary"
                 },
                 { 
-                    name: "Pre-Ballast Non-ECA", 
+                    name: "Non-ECA", 
                     distance: 385, 
-                    speed: 13, 
+                    speed: 13.7, 
                     baseDays: 1.387, 
                     adjMarginDays: 1.595, 
                     lfoBase: 68.59, 
@@ -52,12 +55,15 @@ $(document).ready(function() {
                     per_day_cons : 43.0,
                     co2_wtw_factor : 3.747,
                     type: 'ballast-non-eca',
-                    description: 'Ballast voyage outside ECA zones'
+                    description: 'Ballast voyage outside ECA zones',
+                    segment: "pre_ballast",
+                    from: "ECA-NonECA boundary",
+                    to: "Narvik"
                 },
                 { 
                     name: "Loading", 
                     distance: 0, 
-                    speed: 0, 
+                    speed: 0.0, 
                     baseDays: 2.8000, 
                     adjMarginDays: 2.8000, 
                     lfoBase: 0, 
@@ -69,12 +75,15 @@ $(document).ready(function() {
                     per_day_cons : 4.0,
                     co2_wtw_factor : 3.876,
                     type: 'port-loading',
-                    description: 'Loading operations at Narvik'
+                    description: 'Loading operations at Narvik',
+                    segment: "pre_ballast",
+                    from: "Narvik",
+                    to: "Narvik"
                 },
                 { 
-                    name: "Laden ECA", 
+                    name: "ECA", 
                     distance: 586, 
-                    speed: 12, 
+                    speed: 12.4, 
                     baseDays: 2.035, 
                     adjMarginDays: 2.340, 
                     lfoBase: 0, 
@@ -86,12 +95,15 @@ $(document).ready(function() {
                     per_day_cons : 43.0,
                     co2_wtw_factor : 3.876,
                     type: 'laden-eca',
-                    description: 'Laden voyage in ECA zone'
+                    description: 'Laden voyage in ECA zone',
+                    segment: "laden",
+                    from: "Narvik",
+                    to: "ECA-NonECA boundary"
                 },
                 { 
-                    name: "Laden Non-ECA", 
+                    name: "Non-ECA", 
                     distance: 497, 
-                    speed: 12, 
+                    speed: 12.1, 
                     baseDays: 1.725, 
                     adjMarginDays: 1.984, 
                     lfoBase: 85.31, 
@@ -103,12 +115,15 @@ $(document).ready(function() {
                     per_day_cons : 43.0,
                     co2_wtw_factor : 3.747,
                     type: 'laden-non-eca',
-                    description: 'Laden voyage outside ECA zones'
+                    description: 'Laden voyage outside ECA zones',
+                    segment: "laden",
+                    from: "ECA-NonECA boundary",
+                    to: "Hamburg"
                 },
                 { 
                     name: "Discharging", 
                     distance: 0, 
-                    speed: 0, 
+                    speed: 0.0, 
                     baseDays: 3.8000, 
                     adjMarginDays: 3.8000, 
                     lfoBase: 0, 
@@ -120,12 +135,15 @@ $(document).ready(function() {
                     per_day_cons : 4.0,
                     co2_wtw_factor : 3.876,
                     type: 'port-discharging',
-                    description: 'Discharging operations at Hamburg'
+                    description: 'Discharging operations at Hamburg',
+                    segment: "laden",
+                    from: "Hamburg",
+                    to: "Hamburg"
                 },
                 { 
-                    name: "Post-Ballast ECA", 
+                    name: "ECA", 
                     distance: 84, 
-                    speed: 13, 
+                    speed: 13.3, 
                     baseDays: 0.302, 
                     adjMarginDays: 0.348, 
                     lfoBase: 0, 
@@ -137,7 +155,10 @@ $(document).ready(function() {
                     type: 'ballast-eca',
                     per_day_cons : 43.0,
                     co2_wtw_factor : 3.876,
-                    description: 'Ballast voyage in ECA zone after discharge'
+                    description: 'Ballast voyage in ECA zone after discharge',
+                    segment: "post_ballast",
+                    from: "Hamburg",
+                    to: "Elbe1"
                 }
             ]
         },
@@ -158,6 +179,128 @@ $(document).ready(function() {
                 "basline_laden_wo_margin_days" : 11.042,
             },
             legs: [
+                { 
+                    name: "Pre Ballast", 
+                    distance: 3095, 
+                    speed: 13, 
+                    baseDays: 11.4079, 
+                    adjMarginDays: 11.4079, 
+                    lfoBase: 279.14, 
+                    mgoBase: 272.23, 
+                    hfoBase: 0,
+                    lfo: 0, 
+                    hfo: 189.35,
+                    mgo: 226.01,   
+                    co2Exposure: 1579.63936, 
+                    co2WTW: 1579.63936, 
+                    totalCO2: 1579.63936,
+                    per_day_cons : 43,
+                    co2_wtw_factor : 3.810690135,
+                    type: 'ballast-eca',
+                    description: 'Ballast voyage in ECA zone before loading',
+                    segment: "pre_ballast",
+                    from: "Elbe 1",
+                    to: "Seven Islands",
+                    seaMargin: 8.47,
+                },
+                { 
+                    name: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Loading", 
+                    distance: 0, 
+                    speed: 0.0, 
+                    baseDays: 2.3000, 
+                    adjMarginDays: 2.3000, 
+                    lfoBase: 0, 
+                    mgoBase: 22.98, 
+                    hfoBase: 0,
+                    lfo: 0, 
+                    mgo: 22.98,
+                    hfo: 0,  
+                    co2Exposure: 89.07048, 
+                    co2WTW: 89.07048, 
+                    totalCO2: 89.07048,
+                    per_day_cons : 4.0,
+                    co2_wtw_factor : 3.876,
+                    type: 'port-loading',
+                    description: 'Loading operations at Seven Island',
+                    segment: "pre_ballast",
+                    from: "Seven Islands",
+                    to: "Seven Islands",
+                    seaMargin: "-"
+                },
+                { 
+                    name: "Laden", 
+                    distance: 3180, 
+                    speed: 12, 
+                    baseDays: 12.6979, 
+                    adjMarginDays: 12.6979, 
+                    lfoBase: 269.69, 
+                    mgoBase: 276.23, 
+                    hfoBase: 0,
+                    lfo: 0, 
+                    mgo: 149.09, 
+                    hfo: 263.09,  
+                    co2Exposure: 1555.51528, 
+                    co2WTW: 1555.51528, 
+                    totalCO2: 1555.51528,
+                    per_day_cons : 43.0,
+                    co2_wtw_factor : 3.812271196,
+                    type: 'laden-eca',
+                    description: 'Laden voyage in ECA zone',
+                    segment: "laden",
+                    from: "Seven Islands",
+                    to: "Hamburg",
+                    seaMargin: 2.37
+                },
+                { 
+                    name: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Discharging", 
+                    distance: 0, 
+                    speed: 0.0, 
+                    baseDays: 3.8000, 
+                    adjMarginDays: 3.8000, 
+                    lfoBase: 0, 
+                    mgoBase: 15.2, 
+                    hfoBase: 0,
+                    lfo: 0, 
+                    mgo: 14.46, 
+                    hfo: 0,  
+                    co2Exposure: 56.04696, 
+                    co2WTW: 56.04696, 
+                    totalCO2: 56.04696,
+                    per_day_cons : 4.0,
+                    co2_wtw_factor : 3.876,
+                    type: 'port-discharging',
+                    description: 'Discharging operations at Hamburg',
+                    segment: "laden",
+                    from: "Hamburg",
+                    to: "Hamburg",
+                    seaMargin: "-",
+                },
+                { 
+                    name: "Post Ballast", 
+                    distance: 84, 
+                    speed: 13, 
+                    baseDays: 0.302, 
+                    adjMarginDays: 0.348, 
+                    lfoBase: 0, 
+                    mgoBase: 14.94, 
+                    hfoBase: 0,
+                    lfo: 0, 
+                    mgo: 10.4, 
+                    hfo : 0,  
+                    co2Exposure: 40.3104, 
+                    co2WTW: 40.3104, 
+                    totalCO2: 40.3104,
+                    per_day_cons : 43,
+                    co2_wtw_factor : 3.876,
+                    type: 'ballast-eca',
+                    description: 'Ballast voyage in ECA zone after discharge',
+                    segment: "post_ballast",
+                    from: "Hamburg",
+                    to: "Elbe 1",
+                    seaMargin: "-",
+                }
+            ],
+            legs1:[
                 { 
                     name: "Pre-Ballast ECA", 
                     distance: 1528, 
@@ -416,7 +559,7 @@ $(document).ready(function() {
         if (!selectedRoute) return;
         
         const routeData = baselineData[selectedRoute];
-        const tbody = $('#detailedTableBody');
+        let tbody = $('#detailedTableBody');
         tbody.empty();
         let sea_margin_ballast_days = $("#seaMarginBallast").val()
         let sea_margin_laden_days = $("#seaMarginLaden").val()
@@ -452,15 +595,41 @@ $(document).ready(function() {
         //     laden_margin_adj = routeData.baseline.baseline_margin_laden;
         // }
         let total_co2 = 0.0
+        const segmentLengths = {
+            "pre_ballast": 0,
+            "laden": 0,
+            "post_ballast": 0
+        }
+
+        const valuesTotal = {
+            "lfoBase" : 0,
+            "mgoBase" : 0,
+            "hfoBase" : 0,
+            "co2WTW"  : 0
+        };
+
         console.log("------------------")
         routeData.legs.forEach((leg, index) => {
             if (leg.distance!=0){
                 leg.baseDays = leg.distance / leg.speed / 24.0 * 1.15
                 
             }
+
+            if (leg.segment == "pre_ballast"){
+                segmentLengths.pre_ballast += 1;
+            } else if (leg.segment == "laden"){
+                segmentLengths.laden += 1;
+            } else if (leg.segment == "post_ballast"){
+                segmentLengths.post_ballast += 1;
+            }
+
+            valuesTotal["lfoBase"] += leg.lfo;
+            valuesTotal["mgoBase"] += leg.mgo;
+            valuesTotal["hfoBase"] += leg.hfo;
+            valuesTotal["co2WTW"] += leg.co2WTW;
             
             leg.adjMarginDays=leg.baseDays;
-            if (leg.name!="Post-Ballast ECA"){
+            if (leg.name!="ECA" && leg.segment!="post_ballast"){
                 if (leg.type && leg.type.includes('ballast') && ballast_margin_adj!=null) {
                     console.log(leg.baseDays,ballast_days,ballast_margin_adj)
                     leg.adjMarginDays = leg.baseDays+(leg.baseDays/ballast_days* ballast_margin_adj);
@@ -483,30 +652,88 @@ $(document).ready(function() {
                     leg.adjMarginDays = leg.baseDays;
                 }
             }
+
+            // console.log(leg.baseDays, leg.adjMarginDays,"==========days and margin days");
             leg.baseDays =  Math.round( leg.baseDays * 10000) / 10000;
             //first round of all of them to 4 decimal palace then conduct the calculation
             leg.adjMarginDays = Math.round(leg.adjMarginDays * 10000) / 10000;
             
-
-
+            // let seaMargin = (((leg.adjMarginDays - leg.baseDays) / leg.baseDays) * 100)
+            let seaMargin = leg.seaMargin;
             total_co2+=leg.adjMarginDays*leg.per_day_cons*leg.co2_wtw_factor;
-            console.log(leg.name,leg.adjMarginDays,leg.per_day_cons,leg.co2_wtw_factor,leg.adjMarginDays*leg.per_day_cons*leg.co2_wtw_factor)
+            // console.log(leg.name,leg.adjMarginDays,leg.per_day_cons,leg.co2_wtw_factor,leg.adjMarginDays*leg.per_day_cons*leg.co2_wtw_factor)
+            leg.adjMarginDays = leg.adjMarginDays.toFixed(2);
+            // if(leg.name == 'Loading' || leg.name == 'Discharging' || leg.name == "Post Ballast"){
+            //     leg.adjMarginDays = "-";
+            //     seaMargin = "-"
+            // }
+            // else{
+            //     seaMargin = seaMargin.toFixed(1);
+            // }
+            console.log(leg,seaMargin,"==========leg")
+            let portColumn = `
+                <td class="text-center">${leg.from}</td>
+                <td class="text-center">${leg.to}</td>
+            `
+            let alignClass = "text-left";
+            if(leg.name.includes('Loading') || leg.name.includes('Discharging')){
+                portColumn = `<td class="text-center" colspan = "2">${leg.from}</td>`;
+                alignClass = "text-right";
+            }
             const row = $(`
-                <tr class="table-cell-animate" style="animation-delay: ${index * 0.05}s">
-                    <td class="table-leg-name">${leg.name}</td>
+                <tr class="table-cell-animate" style="animation-delay: ${index * 0.05}s" data-segment="${leg.segment}">
+                    <td class="table-leg-name ${alignClass}">${leg.name}</td>
+                    ${portColumn}
                     <td class="table-numeric">${leg.distance}</td>
-                    <td class="table-numeric">${leg.speed}</td>
-                    <td class="table-numeric">${leg.baseDays}</td>
+                    <td class="table-numeric">${leg.speed.toFixed(1)}</td>
+                    <td class="table-numeric">${leg.baseDays.toFixed(2)}</td>
                     <td class="table-numeric">${leg.adjMarginDays}</td>
-                    
+                    <td class="table-numeric">${seaMargin}</td>
+                    <td class="table-numeric">${leg.hfo}</td>
+                    <td class="table-numeric">${leg.lfo}</td>
+                    <td class="table-numeric">${leg.mgo}</td>
+                    <td class="table-numeric">${leg.co2WTW.toFixed(2)}</td>
                 </tr>
             `);
-            
+
             tbody.append(row);
         });
+
+        // prependSegmentHeaders(tbody, segmentLengths);
+
+        const totalRow = `
+            <tr>
+                <td class="text-end font-bold" colspan="8">Total</td>
+                <td class="table-numeric">${(valuesTotal.hfoBase.toFixed(2))}</td>
+                <td class="table-numeric">${(valuesTotal.lfoBase.toFixed(2))}</td>
+                <td class="table-numeric">${(valuesTotal.mgoBase.toFixed(2))}</td>
+                <td class="table-numeric">${(valuesTotal.co2WTW.toFixed(2))}</td>
+            </tr>
+        `;
+
+        tbody.append(totalRow);
+
         $("#adjBaselineCard").text((total_co2/133000*1000).toFixed(2));
 
     }
+
+    const prependSegmentHeaders = (tbody, segmentLengths) => {
+        const segments = [
+            { key: "pre_ballast", label: "Pre-Ballast" },
+            { key: "laden", label: "Laden" },
+            { key: "post_ballast", label: "Post-Ballast" }
+        ];
+
+        tbody.find('tr').each(function() {
+            const row = $(this);
+            const segment = row.data('segment');
+            const headerTd = `<td class="table-segment-header font-bold uppercase" rowspan="${segmentLengths[segment]}">${segments.find(s => s.key === segment).label}</td>`;
+            if (segment && row.prev().data('segment') !== segment) {
+                row.prepend(headerTd);
+            }
+        });
+    };
+
 
     // Initialize table on page load  
     updateDetailedTable();
@@ -973,6 +1200,7 @@ $(document).ready(function() {
         
         // Get selected route baseline from radio buttons
         const selectedRoute = $('input[name="route"]:checked').val() || 'narvik';
+        const factor = selectedRoute == 'narvik' ? 7.4 : 10.46;
         const baselineCO2 = routeBaselines[selectedRoute] || routeBaselines['narvik'];
         const baselineCO2per1000MT = parseFloat($("#adjBaselineCard").text());
         // Calculate emission reduction percentage
@@ -1042,7 +1270,7 @@ $(document).ready(function() {
             barColor = 'from-red-500 to-red-600';
         }
 
-        messageElement.text(message);
+        messageElement.text('');
         
         // Update actual CO2 bar color based on performance
         setTimeout(() => {

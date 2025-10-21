@@ -21,7 +21,7 @@ function exportVoyageAnalysisToPDF() {
         minute: '2-digit' 
     });
     const selectedRoute = $('input[name="route"]:checked').val() || 'narvik';
-    const routeName = selectedRoute === 'narvik' ? 'Narvik Route' : 'Seven Island';
+    const routeName = selectedRoute === 'narvik' ? 'Narvik Route' : 'Seven Islands';
     const vesselName = $('#VesselName').val() || '';
     const voyageNumber = $('#VoyageNo').val() || '';
     
@@ -230,20 +230,36 @@ doc.text(` : ${stopDischarging} )`,
     // Prepare enhanced table data with compact headers
     const tableData = [];
     const tableHeaders = [
+        'Segment',
         'Voyage Leg', 
         'Dist.\n(nm)', 
         'Speed\n(kts)', 
         'Days', 
         'Adj. Margin Days', 
-        
     ];
     // console.log(routeDataDict[selectedRoute]);
     // Get data from the detailed table or route data
     let hasTableData = false;
+    
     $('#detailedTableBody tr').each(function() {
         const row = [];
+        const $row = $(this);
+        const segment = $row.data('segment');
+
+        const segments = [
+            { key: "pre_ballast", label: "Pre-Ballast" },
+            { key: "laden", label: "Laden" },
+            { key: "post_ballast", label: "Post-Ballast" }
+        ];
+
+        if(segment && $row.prev().data('segment') !== segment) {
+            row.push(segments.find(s => s.key === segment)?.label || segment);
+        } else {
+            row.push('');
+        }
+
         $(this).find('td').each(function(index) {
-            if (index < 5) {
+            if (index < 6) {
                 row.push($(this).text().trim());
             }
         });
@@ -274,50 +290,61 @@ doc.text(` : ${stopDischarging} )`,
     
     // Add the professional table with proper responsive sizing
     doc.autoTable({
-        head: [tableHeaders],
-        body: tableData,
+        // head: [tableHeaders],
+        // body: tableData,
+        html: '#voyageLegTable',
         startY: yPos + 10,
         styles: {
             fontSize: 7,
-            cellPadding: 2,
+            cellPadding: 2, // little extra
             lineColor: [200, 200, 200],
             lineWidth: 0.1,
             textColor: [50, 50, 50],
             overflow: 'linebreak',
-            cellWidth: 'wrap'
+            cellWidth: 'wrap',
+            minCellHeight: 8,   // Increase for more space
         },
         headStyles: {
-            fillColor: [41, 128, 185],
-            textColor: [255, 255, 255],
-            fontStyle: 'bold',
-            fontSize: 10,
-            cellPadding: 3,
-            halign: 'center',
-            valign: 'middle'
+            minCellHeight: 8,
+            cellPadding: 2,
+            overflow: 'linebreak',
+            cellWidth: 'wrap',
+            halign: "center",
+            fillColor:[116,24,15],
+            textColor :"white"
         },
         bodyStyles: {
-            fontSize: 9,
-            halign: 'center',
-            valign: 'middle'
+            minCellHeight: 8,
+            cellPadding: 2,
+            overflow: 'linebreak',
+            cellWidth: 'wrap',
+            fontSize: 7
         },
         alternateRowStyles: {
             fillColor: [248, 249, 250]
         },
         columnStyles: {
-            0: { cellWidth: 45, fontStyle: 'bold', halign: 'left' },
-            1: { cellWidth: 30, halign: 'center' },
-            2: { cellWidth: 30, halign: 'center' },
-            3: { cellWidth: 25, halign: 'center' },
-            4: { cellWidth: 24, halign: 'center' },
-            // 5: { cellWidth: 25, halign: 'center' },
-            // 6: { cellWidth: 25, halign: 'center' },
-            // 7: { cellWidth: 30, halign: 'center' }
+            0: { cellWidth: 28, fontStyle: 'bold', halign: 'left' },
+            1: { cellWidth: 20, halign: 'center' },
+            2: { cellWidth: 35, halign: 'center' },
+            3: { cellWidth: 35, halign: 'center' },
+            4: { cellWidth: 18, halign: 'right' },
+            5: { cellWidth: 18, halign: 'right' },
+            6: { cellWidth: 15, halign: 'right' },
+            7: { cellWidth: 15, halign: 'right' },
+            8: { cellWidth: 15, halign: 'right' },
+            9: { cellWidth: 17, halign: 'right' },
+            10: { cellWidth: 17, halign: 'right' },
+            11: { cellWidth: 17, halign: 'right' },
+            12: { cellWidth: 20, halign: 'right' },
         },
         margin: { left: 20, right: 20 },
         theme: 'grid',
         tableWidth: 'auto',
         showHead: 'everyPage'
     });
+
+
     
     // Methodology note
     const finalY = doc.lastAutoTable.finalY + 15;

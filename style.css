@@ -435,6 +435,9 @@ label:focus {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04);
     background: #ffffff;
     border: 1px solid rgba(226, 232, 240, 0.8);
+    white-space: normal !important;
+    word-wrap: break-word;
+    overflow: visible;
 }
 
 .dark .enhanced-table {
@@ -540,6 +543,25 @@ label:focus {
     border-left: 3px solid #6366f1;
     border-radius: 0 6px 6px 0;
     font-size: 0.875rem;
+}
+
+.table-segment-header {
+    background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+    color: #1e293b;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    padding: 18px 16px;
+    border: none;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+    top: 0;
+    z-index: 10;
+}
+
+.dark .table-segment-header {
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    color: #e2e8f0;
+    border-bottom: 1px solid #334155;
 }
 
 .dark .table-leg-name {
